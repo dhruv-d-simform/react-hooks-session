@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react';
-import SlideWrapper from '@/components/SlideWrapper';
+import CodeBlock from '@/components/CodeBlock';
 
 // --- Context definitions ---
 
@@ -189,36 +189,19 @@ function Avatar() {
   return <div className={theme.accent}>RH</div>
 }`;
 
-export default function UseContextSlide() {
+export default function Demo() {
     return (
-        <SlideWrapper
-            badge="Hook"
-            title="useContext"
-            subtitle="Share data across the component tree without passing props at every level"
-            syntax={`const value = useContext(MyContext)`}
-            bullets={[
-                {
-                    text: 'createContext() creates the context object with a default value',
-                },
-                {
-                    text: 'The Provider wraps the subtree that needs access — value flows down',
-                    highlight: true,
-                },
-                {
-                    text: 'Any component in the tree can call useContext() — no prop drilling',
-                },
-                {
-                    text: 'When provider value changes, all consumers re-render',
-                },
-                {
-                    text: 'Wrap in a custom hook (useTheme, useUser) for better ergonomics + error safety',
-                },
-                {
-                    text: 'Best for: theme, auth, locale, feature flags — not high-frequency updates',
-                },
-            ]}
-            demo={<ThemeDemo />}
-            code={code}
-        />
+        <div className="p-6 space-y-6">
+            <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-3">Live Demo</p>
+                <div className="rounded-xl bg-zinc-900 border border-zinc-800 p-5">
+                    <ThemeDemo />
+                </div>
+            </div>
+            <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-3">Source</p>
+                <CodeBlock code={code} title="useContext — Theme Example" />
+            </div>
+        </div>
     );
 }

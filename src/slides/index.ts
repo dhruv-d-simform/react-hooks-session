@@ -1,14 +1,14 @@
 import type { ComponentType } from 'react';
-import Intro from './Intro';
-import ClassComponents from './ClassComponents';
-import WhyHooks from './WhyHooks';
-import UseState from './UseState';
-import UseEffect from './UseEffect';
-import UseContext from './UseContext';
-import UseRef from './UseRef';
-import UseReducer from './UseReducer';
-import UsePerformance from './UsePerformance';
-import CustomHooks from './CustomHooks';
+import Intro from './intro';
+import ClassComponents from './class-components';
+import WhyHooks from './why-hooks';
+import UseState from './use-state';
+import UseEffect from './use-effect';
+import UseContext from './use-context';
+import UseRef from './use-ref';
+import UseReducer from './use-reducer';
+import UsePerformance from './use-performance';
+import CustomHooks from './custom-hooks';
 
 export interface SlideConfig {
     id: string;

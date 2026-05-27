@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import SlideWrapper from '@/components/SlideWrapper';
+import CodeBlock from '@/components/CodeBlock';
 
 interface CounterState {
     count: number;
@@ -116,34 +116,19 @@ const code = `class Counter extends Component<{}, { count: number; timer: number
   render() { /* JSX */ }
 }`;
 
-export default function ClassComponentsSlide() {
+export default function Demo() {
     return (
-        <SlideWrapper
-            badge="Before Hooks"
-            title="Class Components"
-            subtitle="State and lifecycle in class-based React — the original way to build stateful UIs"
-            bullets={[
-                {
-                    text: 'State lives in this.state, updated via this.setState()',
-                },
-                {
-                    text: 'componentDidMount → runs after first render (like "setup")',
-                },
-                { text: 'componentDidUpdate → runs after every re-render' },
-                {
-                    text: 'componentWillUnmount → cleanup before component is removed',
-                },
-                {
-                    text: 'Timer setup is in mount, cleanup is in unmount — logic is split',
-                    highlight: true,
-                },
-                {
-                    text: 'Must use arrow functions or bind(this) for event handlers',
-                },
-                { text: 'Class components are deprecated in React 19' },
-            ]}
-            demo={<ClassCounter />}
-            code={code}
-        />
+        <div className="p-6 space-y-6">
+            <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-3">Live Demo</p>
+                <div className="rounded-xl bg-zinc-900 border border-zinc-800 p-5">
+                    <ClassCounter />
+                </div>
+            </div>
+            <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-3">Source</p>
+                <CodeBlock code={code} title="ClassComponents.tsx" />
+            </div>
+        </div>
     );
 }

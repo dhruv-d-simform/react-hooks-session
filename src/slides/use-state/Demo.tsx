@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import SlideWrapper from '@/components/SlideWrapper';
+import CodeBlock from '@/components/CodeBlock';
+import TabBar from '@/components/TabBar';
 
 type Tab = 'counter' | 'input' | 'array';
 
@@ -167,68 +168,28 @@ const tabLabels: Record<Tab, string> = {
     array: 'Arrays',
 };
 
-function DemoWithTabs({ onTabChange }: { onTabChange: (t: Tab) => void }) {
-    const [tab, setTab] = useState<Tab>('counter');
-
-    const handleTabChange = (t: Tab) => {
-        setTab(t);
-        onTabChange(t);
-    };
-
-    return (
-        <div className="space-y-4">
-            <div className="flex gap-1 bg-zinc-800 p-1 rounded-lg">
-                {(Object.keys(tabLabels) as Tab[]).map((t) => (
-                    <button
-                        key={t}
-                        onClick={() => handleTabChange(t)}
-                        className={`flex-1 py-1.5 text-xs rounded-md font-medium transition-colors ${
-                            tab === t
-                                ? 'bg-indigo-600 text-white'
-                                : 'text-zinc-400 hover:text-zinc-200'
-                        }`}
-                    >
-                        {tabLabels[t]}
-                    </button>
-                ))}
-            </div>
-            {tab === 'counter' && <CounterDemo />}
-            {tab === 'input' && <InputDemo />}
-            {tab === 'array' && <ArrayDemo />}
-        </div>
-    );
-}
-
-export default function UseStateSlide() {
+export default function Demo() {
     const [activeTab, setActiveTab] = useState<Tab>('counter');
 
     return (
-        <SlideWrapper
-            badge="Hook"
-            title="useState"
-            subtitle="Adds local state to a functional component — React remembers it between renders"
-            syntax={`const [state, setState] = useState(initialValue)`}
-            bullets={[
-                {
-                    text: 'Returns [currentValue, updaterFn] — array destructuring names them anything',
-                },
-                {
-                    text: 'Calling setState schedules a re-render with the updated value',
-                },
-                {
-                    text: 'Use functional update setState(prev => ...) when new state depends on previous',
-                    highlight: true,
-                },
-                {
-                    text: 'Multiple useState calls are independent — one per logical piece of state',
-                },
-                {
-                    text: 'Arrays/objects: always return a new reference — never mutate in-place',
-                },
-            ]}
-            demo={<DemoWithTabs onTabChange={setActiveTab} />}
-            code={codeSamples[activeTab]}
-            codeTitle={`useState — ${tabLabels[activeTab]}`}
-        />
+        <div className="p-6 space-y-6">
+            <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-3">Live Demo</p>
+                <div className="rounded-xl bg-zinc-900 border border-zinc-800 p-5 space-y-4">
+                    <TabBar
+                        tabs={tabLabels}
+                        active={activeTab}
+                        onSelect={(v) => setActiveTab(v as Tab)}
+                    />
+                    {activeTab === 'counter' && <CounterDemo />}
+                    {activeTab === 'input' && <InputDemo />}
+                    {activeTab === 'array' && <ArrayDemo />}
+                </div>
+            </div>
+            <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-3">Source</p>
+                <CodeBlock code={codeSamples[activeTab]} title={`useState — ${tabLabels[activeTab]}`} />
+            </div>
+        </div>
     );
 }

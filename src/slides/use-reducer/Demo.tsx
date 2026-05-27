@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-import SlideWrapper from '@/components/SlideWrapper';
+import CodeBlock from '@/components/CodeBlock';
 
 interface CartItem {
     id: number;
@@ -195,36 +195,19 @@ function Cart() {
   dispatch({ type: 'CLEAR' })
 }`;
 
-export default function UseReducerSlide() {
+export default function Demo() {
     return (
-        <SlideWrapper
-            badge="Hook"
-            title="useReducer"
-            subtitle="An alternative to useState for complex state logic — reducer pattern familiar from Redux"
-            syntax={`const [state, dispatch] = useReducer(reducer, initialState)`}
-            bullets={[
-                {
-                    text: 'reducer(state, action) → newState — pure function, no side effects',
-                },
-                {
-                    text: 'dispatch(action) triggers the reducer and schedules a re-render',
-                    highlight: true,
-                },
-                {
-                    text: 'Actions are plain objects — { type: "ACTION_NAME", ...payload }',
-                },
-                {
-                    text: 'Prefer useReducer when: multiple sub-values, next state depends on previous',
-                },
-                {
-                    text: 'Typed discriminated unions catch invalid actions at compile time',
-                },
-                {
-                    text: 'Reducer can live outside the component — easy to test in isolation',
-                },
-            ]}
-            demo={<CartDemo />}
-            code={code}
-        />
+        <div className="p-6 space-y-6">
+            <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-3">Live Demo</p>
+                <div className="rounded-xl bg-zinc-900 border border-zinc-800 p-5">
+                    <CartDemo />
+                </div>
+            </div>
+            <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-3">Source</p>
+                <CodeBlock code={code} title="useReducer — Cart" />
+            </div>
+        </div>
     );
 }

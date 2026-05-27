@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import SlideWrapper from '@/components/SlideWrapper';
+import CodeBlock from '@/components/CodeBlock';
+import TabBar from '@/components/TabBar';
 
 type Tab = 'title' | 'timer' | 'fetch';
 
@@ -244,72 +245,28 @@ const tabLabels: Record<Tab, string> = {
     fetch: 'Data Fetching',
 };
 
-function DemoWithTabs({ onTabChange }: { onTabChange: (t: Tab) => void }) {
-    const [tab, setTab] = useState<Tab>('title');
-
-    const handleTabChange = (t: Tab) => {
-        setTab(t);
-        onTabChange(t);
-    };
-
-    return (
-        <div className="space-y-4">
-            <div className="flex gap-1 bg-zinc-800 p-1 rounded-lg">
-                {(Object.keys(tabLabels) as Tab[]).map((t) => (
-                    <button
-                        key={t}
-                        onClick={() => handleTabChange(t)}
-                        className={`flex-1 py-1.5 text-[11px] rounded-md font-medium transition-colors ${
-                            tab === t
-                                ? 'bg-indigo-600 text-white'
-                                : 'text-zinc-400 hover:text-zinc-200'
-                        }`}
-                    >
-                        {tabLabels[t]}
-                    </button>
-                ))}
-            </div>
-            {tab === 'title' && <TitleDemo />}
-            {tab === 'timer' && <TimerDemo />}
-            {tab === 'fetch' && <FetchDemo />}
-        </div>
-    );
-}
-
-export default function UseEffectSlide() {
+export default function Demo() {
     const [activeTab, setActiveTab] = useState<Tab>('title');
 
     return (
-        <SlideWrapper
-            badge="Hook"
-            title="useEffect"
-            subtitle="Synchronize a component with an external system — runs after the render is committed to the screen"
-            syntax={`useEffect(() => {
-  // side effect
-  return () => { /* cleanup */ }
-}, [dependencies])`}
-            bullets={[
-                { text: 'Runs after the browser has painted — non-blocking' },
-                {
-                    text: 'The cleanup function runs before the next effect and on unmount',
-                    highlight: true,
-                },
-                {
-                    text: '[] — runs once after mount (equiv. componentDidMount)',
-                },
-                {
-                    text: '[dep] — runs whenever dep changes (reactive to dependencies)',
-                },
-                {
-                    text: 'No array — runs after every render (rarely what you want)',
-                },
-                {
-                    text: 'Return an AbortController to cancel fetch on cleanup',
-                },
-            ]}
-            demo={<DemoWithTabs onTabChange={setActiveTab} />}
-            code={codeSamples[activeTab]}
-            codeTitle={`useEffect — ${tabLabels[activeTab]}`}
-        />
+        <div className="p-6 space-y-6">
+            <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-3">Live Demo</p>
+                <div className="rounded-xl bg-zinc-900 border border-zinc-800 p-5 space-y-4">
+                    <TabBar
+                        tabs={tabLabels}
+                        active={activeTab}
+                        onSelect={(v) => setActiveTab(v as Tab)}
+                    />
+                    {activeTab === 'title' && <TitleDemo />}
+                    {activeTab === 'timer' && <TimerDemo />}
+                    {activeTab === 'fetch' && <FetchDemo />}
+                </div>
+            </div>
+            <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-3">Source</p>
+                <CodeBlock code={codeSamples[activeTab]} title={`useEffect — ${tabLabels[activeTab]}`} />
+            </div>
+        </div>
     );
 }

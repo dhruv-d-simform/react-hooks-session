@@ -1,5 +1,6 @@
 import { useState, useMemo, useCallback, memo, useRef } from 'react';
-import SlideWrapper from '@/components/SlideWrapper';
+import CodeBlock from '@/components/CodeBlock';
+import TabBar from '@/components/TabBar';
 
 type Tab = 'memo' | 'callback';
 
@@ -201,72 +202,27 @@ const tabLabels: Record<Tab, string> = {
     callback: 'useCallback',
 };
 
-function DemoWithTabs({ onTabChange }: { onTabChange: (t: Tab) => void }) {
-    const [tab, setTab] = useState<Tab>('memo');
-
-    const handleTabChange = (t: Tab) => {
-        setTab(t);
-        onTabChange(t);
-    };
-
-    return (
-        <div className="space-y-4">
-            <div className="flex gap-1 bg-zinc-800 p-1 rounded-lg">
-                {(Object.keys(tabLabels) as Tab[]).map((t) => (
-                    <button
-                        key={t}
-                        onClick={() => handleTabChange(t)}
-                        className={`flex-1 py-1.5 text-xs rounded-md font-medium transition-colors ${
-                            tab === t
-                                ? 'bg-indigo-600 text-white'
-                                : 'text-zinc-400 hover:text-zinc-200'
-                        }`}
-                    >
-                        {tabLabels[t]}
-                    </button>
-                ))}
-            </div>
-            {tab === 'memo' && <MemoDemo />}
-            {tab === 'callback' && <CallbackDemo />}
-        </div>
-    );
-}
-
-export default function UsePerformanceSlide() {
+export default function Demo() {
     const [activeTab, setActiveTab] = useState<Tab>('memo');
 
     return (
-        <SlideWrapper
-            badge="Performance"
-            title="useMemo & useCallback"
-            subtitle="Skip expensive recalculations and prevent unnecessary child re-renders between renders"
-            syntax={`useMemo(() => expensiveCalc(), [dep])
-useCallback(() => handler(), [dep])`}
-            bullets={[
-                {
-                    text: 'useMemo caches a computed value — recalculates only when deps change',
-                    highlight: true,
-                },
-                {
-                    text: 'useCallback caches a function reference — same identity between renders',
-                    highlight: true,
-                },
-                {
-                    text: "React.memo skips re-rendering if props haven't changed by reference",
-                },
-                {
-                    text: 'useCallback + React.memo = stable function props that memo can bail out on',
-                },
-                {
-                    text: "⚠️ Don't over-optimize — profile first, add memo where you measure slowness",
-                },
-                {
-                    text: 'Empty deps [] → value/function created once, never changes',
-                },
-            ]}
-            demo={<DemoWithTabs onTabChange={setActiveTab} />}
-            code={codeSamples[activeTab]}
-            codeTitle={tabLabels[activeTab]}
-        />
+        <div className="p-6 space-y-6">
+            <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-3">Live Demo</p>
+                <div className="rounded-xl bg-zinc-900 border border-zinc-800 p-5 space-y-4">
+                    <TabBar
+                        tabs={tabLabels}
+                        active={activeTab}
+                        onSelect={(v) => setActiveTab(v as Tab)}
+                    />
+                    {activeTab === 'memo' && <MemoDemo />}
+                    {activeTab === 'callback' && <CallbackDemo />}
+                </div>
+            </div>
+            <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-3">Source</p>
+                <CodeBlock code={codeSamples[activeTab]} title={tabLabels[activeTab]} />
+            </div>
+        </div>
     );
 }
