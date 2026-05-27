@@ -37,11 +37,15 @@ export default function Demo() {
                     <div className="space-y-4">
                         <ClassCounter />
                         <div className="bg-amber-900/20 border border-amber-700/30 rounded-lg p-3">
-                            <p className="text-xs text-amber-400 font-medium mb-1">⚠️ The problem:</p>
+                            <p className="text-xs text-amber-400 font-medium mb-1">
+                                ⚠️ The problem:
+                            </p>
                             <p className="text-xs text-amber-600">
                                 Timer setup and cleanup live in{' '}
-                                <span className="font-semibold">different lifecycle methods</span> —
-                                related logic is scattered across the class.
+                                <span className="font-semibold">
+                                    different lifecycle methods
+                                </span>{' '}
+                                — related logic is scattered across the class.
                             </p>
                         </div>
                     </div>
@@ -49,10 +53,12 @@ export default function Demo() {
                     <div className="space-y-4">
                         <HooksCounter />
                         <div className="bg-emerald-900/20 border border-emerald-700/30 rounded-lg p-3">
-                            <p className="text-xs text-emerald-400 font-medium mb-1">✅ The fix:</p>
+                            <p className="text-xs text-emerald-400 font-medium mb-1">
+                                ✅ The fix:
+                            </p>
                             <p className="text-xs text-emerald-600">
-                                Each useEffect manages one concern. Setup and cleanup live
-                                together — no lifecycle juggling.
+                                Each useEffect manages one concern. Setup and
+                                cleanup live together — no lifecycle juggling.
                             </p>
                         </div>
                     </div>

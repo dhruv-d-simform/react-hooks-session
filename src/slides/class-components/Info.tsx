@@ -46,9 +46,13 @@ export default function Info() {
                         >
                             <div className="flex items-center gap-2 mb-1.5">
                                 <span className="text-lg">{p.emoji}</span>
-                                <span className="font-semibold text-xs">{p.title}</span>
+                                <span className="font-semibold text-xs">
+                                    {p.title}
+                                </span>
                             </div>
-                            <p className="text-xs text-zinc-500 leading-relaxed">{p.desc}</p>
+                            <p className="text-xs text-zinc-500 leading-relaxed">
+                                {p.desc}
+                            </p>
                         </div>
                     ))}
                 </div>
@@ -72,12 +76,19 @@ export default function Info() {
             />
 
             <div className="rounded-xl bg-indigo-900/20 border border-indigo-700/30 p-4">
-                <p className="text-sm font-semibold text-indigo-300 mb-1">The Core Insight</p>
+                <p className="text-sm font-semibold text-indigo-300 mb-1">
+                    The Core Insight
+                </p>
                 <p className="text-sm text-zinc-300">
                     Hooks let you split code based on{' '}
-                    <span className="text-indigo-300 font-semibold">what it does</span>, not{' '}
-                    <span className="text-zinc-400 line-through">when it runs</span>. Related logic
-                    stays together.
+                    <span className="text-indigo-300 font-semibold">
+                        what it does
+                    </span>
+                    , not{' '}
+                    <span className="text-zinc-400 line-through">
+                        when it runs
+                    </span>
+                    . Related logic stays together.
                 </p>
             </div>
         </div>

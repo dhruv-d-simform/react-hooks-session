@@ -14,16 +14,27 @@ const badgeStyles: Record<BadgeVariant, string> = {
     purple: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
 };
 
-export default function InfoHeader({ badge, badgeVariant = 'indigo', title, subtitle }: Props) {
+export default function InfoHeader({
+    badge,
+    badgeVariant = 'indigo',
+    title,
+    subtitle,
+}: Props) {
     return (
         <div className="mb-5">
             {badge && (
-                <span className={`inline-block text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border mb-2.5 ${badgeStyles[badgeVariant]}`}>
+                <span
+                    className={`inline-block text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border mb-2.5 ${badgeStyles[badgeVariant]}`}
+                >
                     {badge}
                 </span>
             )}
             <h1 className="text-3xl font-black tracking-tight mb-1">{title}</h1>
-            {subtitle && <p className="text-zinc-400 text-sm leading-relaxed">{subtitle}</p>}
+            {subtitle && (
+                <p className="text-zinc-400 text-sm leading-relaxed">
+                    {subtitle}
+                </p>
+            )}
         </div>
     );
 }
