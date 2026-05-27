@@ -10,4 +10,7 @@ export default defineConfig({
             '@': '/src',
         },
     },
+    define: {
+        'import.meta.env.VITE_PROJECT_ROOT': JSON.stringify(process.cwd()),
+    },
 });
