@@ -1,6 +1,5 @@
 import { Code2 } from 'lucide-react';
-
-const GITHUB_REPO = 'https://github.com/dhruv-d-simform/react-hooks-session';
+import { GITHUB_REPO } from '@/constants';
 
 interface Props {
     fileUrl: string;

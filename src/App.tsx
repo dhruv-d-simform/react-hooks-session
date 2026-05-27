@@ -7,7 +7,9 @@ import {
     ChevronRight,
     PanelLeftOpen,
     PanelLeftClose,
+    Github,
 } from 'lucide-react';
+import { GITHUB_REPO } from '@/constants';
 
 function SlideView() {
     const { slideId } = useParams<{ slideId: string }>();
@@ -85,6 +87,15 @@ function SlideView() {
                     </span>
                 </div>
                 <div className="flex items-center gap-1">
+                    <a
+                        href={GITHUB_REPO}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-1.5 rounded-lg hover:bg-zinc-800 text-zinc-400 hover:text-zinc-100 transition-colors"
+                        title="View on GitHub"
+                    >
+                        <Github size={17} />
+                    </a>
                     <button
                         onClick={() => goTo(currentIndex - 1)}
                         disabled={currentIndex === 0}
