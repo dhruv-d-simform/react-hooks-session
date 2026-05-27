@@ -69,4 +69,4 @@ export default class ClassCounter extends Component<object, CounterState> {
     }
 }
 
-export const fileUrl = import.meta.url;
+export const fileUrl = '/src/slides/class-components/demo/ClassCounter.tsx';

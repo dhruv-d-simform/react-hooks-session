@@ -51,4 +51,4 @@ export default function HooksCounter() {
     );
 }
 
-export const fileUrl = import.meta.url;
+export const fileUrl = '/src/slides/class-components/demo/HooksCounter.tsx';
