@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react';
 import Intro from './intro';
 import BeforeHooks from './before-hooks';
+import AllHooks from './all-hooks';
 
 export interface SlideConfig {
     id: string;
@@ -21,5 +22,11 @@ export const slides: SlideConfig[] = [
         title: 'Before Hooks',
         category: 'Origin',
         component: BeforeHooks,
+    },
+    {
+        id: 'all-hooks',
+        title: 'All Hooks',
+        category: 'Catalog',
+        component: AllHooks,
     },
 ];
