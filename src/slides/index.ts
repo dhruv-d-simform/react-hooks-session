@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 import Intro from './intro';
-import ClassComponents from './class-components';
+import BeforeHooks from './before-hooks';
 
 export interface SlideConfig {
     id: string;
@@ -17,9 +17,9 @@ export const slides: SlideConfig[] = [
         component: Intro,
     },
     {
-        id: 'class-components',
-        title: 'Class Components & Hooks',
-        category: 'Foundations',
-        component: ClassComponents,
+        id: 'before-hooks',
+        title: 'Before Hooks',
+        category: 'Origin',
+        component: BeforeHooks,
     },
 ];

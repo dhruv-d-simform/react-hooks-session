@@ -55,4 +55,4 @@ export default function HooksCounter() {
     );
 }
 
-export const fileUrl = '/src/slides/class-components/demo/HooksCounter.tsx';
+export const fileUrl = '/src/slides/before-hooks/demo/HooksCounter.tsx';
