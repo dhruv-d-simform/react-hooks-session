@@ -21,6 +21,8 @@ import UseSyncExternalStore from './use-sync-external-store';
 import UseHook from './use-hook';
 import UseActionState from './use-action-state';
 import UseOptimistic from './use-optimistic';
+import CustomHooks from './custom-hooks';
+import WrapUp from './wrap-up';
 
 export interface SlideConfig {
     id: string;
@@ -161,5 +163,17 @@ export const slides: SlideConfig[] = [
         title: 'useOptimistic',
         category: 'React 19',
         component: UseOptimistic,
+    },
+    {
+        id: 'custom-hooks',
+        title: 'Custom Hooks',
+        category: 'Custom',
+        component: CustomHooks,
+    },
+    {
+        id: 'wrap-up',
+        title: 'Wrap Up',
+        category: 'Wrap Up',
+        component: WrapUp,
     },
 ];

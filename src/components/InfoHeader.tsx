@@ -1,4 +1,4 @@
-type BadgeVariant = 'indigo' | 'amber' | 'emerald' | 'purple';
+type BadgeVariant = 'indigo' | 'amber' | 'emerald' | 'purple' | 'teal';
 
 interface Props {
     badge?: string;
@@ -12,6 +12,7 @@ const badgeStyles: Record<BadgeVariant, string> = {
     amber: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
     emerald: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
     purple: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+    teal: 'bg-teal-500/20 text-teal-400 border-teal-500/30',
 };
 
 export default function InfoHeader({
