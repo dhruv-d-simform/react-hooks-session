@@ -18,7 +18,7 @@ export default function Sidebar({ slides, current, onSelect, isOpen }: Props) {
         >
             {/* Fixed-width inner wrapper prevents content reflow during the transition */}
             <div className="w-52 flex flex-col flex-1 min-h-0">
-                <nav className="flex-1 p-2 py-3 overflow-y-auto min-h-0">
+                <nav className="flex-1 p-2 py-3 overflow-y-auto min-h-0 slide-scroll">
                     {categories.map((category) => {
                         const categorySlides = slides.filter(
                             (s) => s.category === category
