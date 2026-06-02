@@ -1,15 +1,11 @@
 import { useState, useEffect } from 'react';
+import { UserIdPicker } from './components/UserIdPicker';
+import { LoadingSpinner } from './components/LoadingSpinner';
+import { ErrorDisplay } from './components/ErrorDisplay';
+import { UserCard } from './components/UserCard';
+import type { User } from './components/UserCard';
 
 export const fileUrl = '/src/slides/use-effect/demo/DataFetching.tsx';
-
-interface User {
-    id: number;
-    name: string;
-    username: string;
-    email: string;
-    company: { name: string };
-    phone: string;
-}
 
 export default function DataFetching() {
     const [userId, setUserId] = useState(1);
@@ -45,24 +41,7 @@ export default function DataFetching() {
 
     return (
         <div className="space-y-4">
-            <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-[10px] text-zinc-500 uppercase tracking-wider">
-                    User ID
-                </span>
-                {[1, 2, 3, 4, 5].map((id) => (
-                    <button
-                        key={id}
-                        onClick={() => setUserId(id)}
-                        className={`w-8 h-8 rounded-lg text-xs font-bold transition-colors ${
-                            userId === id
-                                ? 'bg-indigo-600 text-white'
-                                : 'bg-zinc-800 text-zinc-400 hover:text-zinc-200 border border-zinc-700'
-                        }`}
-                    >
-                        {id}
-                    </button>
-                ))}
-            </div>
+            <UserIdPicker active={userId} onSelect={setUserId} />
 
             <div className="bg-zinc-800/40 border border-zinc-700/30 rounded-lg p-2.5 font-mono text-[11px]">
                 <span className="text-zinc-500">useEffect deps: </span>
@@ -73,54 +52,9 @@ export default function DataFetching() {
                 </span>
             </div>
 
-            {loading && (
-                <div className="flex items-center gap-3 py-4">
-                    <div className="w-5 h-5 rounded-full border-2 border-indigo-500 border-t-transparent animate-spin" />
-                    <span className="text-xs text-zinc-500">
-                        Fetching user {userId}…
-                    </span>
-                </div>
-            )}
-
-            {error && (
-                <div className="bg-rose-900/20 border border-rose-700/30 rounded-lg p-3">
-                    <p className="text-xs text-rose-400">Error: {error}</p>
-                </div>
-            )}
-
-            {!loading && !error && user && (
-                <div className="bg-zinc-800/60 border border-zinc-700/50 rounded-xl p-4 space-y-3">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold flex-shrink-0">
-                            {user.name.charAt(0)}
-                        </div>
-                        <div>
-                            <p className="text-sm font-semibold text-zinc-100">
-                                {user.name}
-                            </p>
-                            <p className="text-xs text-zinc-400">
-                                @{user.username}
-                            </p>
-                        </div>
-                    </div>
-                    <div className="space-y-1.5 text-xs">
-                        <div className="flex gap-2">
-                            <span className="text-zinc-600 w-16">Email</span>
-                            <span className="text-zinc-300">{user.email}</span>
-                        </div>
-                        <div className="flex gap-2">
-                            <span className="text-zinc-600 w-16">Phone</span>
-                            <span className="text-zinc-300">{user.phone}</span>
-                        </div>
-                        <div className="flex gap-2">
-                            <span className="text-zinc-600 w-16">Company</span>
-                            <span className="text-zinc-300">
-                                {user.company.name}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            )}
+            {loading && <LoadingSpinner userId={userId} />}
+            {error && <ErrorDisplay message={error} />}
+            {!loading && !error && user && <UserCard user={user} />}
 
             <div className="bg-zinc-800/40 border border-zinc-700/30 rounded-lg p-2.5">
                 <p className="text-[10px] text-zinc-500">

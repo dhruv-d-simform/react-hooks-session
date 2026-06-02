@@ -1,4 +1,6 @@
 import { useRef, useState } from 'react';
+import { RefActionButtons } from './components/RefActionButtons';
+import { ActionLog } from './components/ActionLog';
 
 export const fileUrl = '/src/slides/use-ref/demo/DomRef.tsx';
 
@@ -41,67 +43,31 @@ export default function DomRef() {
                 </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-2">
-                <button
-                    onClick={() => {
-                        nameRef.current?.focus();
-                        addLog('nameRef.current.focus()');
-                    }}
-                    className="py-2 rounded-lg bg-amber-900/30 border border-amber-700/40 text-xs text-amber-300 hover:bg-amber-900/50 transition-colors"
-                >
-                    Focus Name
-                </button>
-                <button
-                    onClick={() => {
-                        emailRef.current?.focus();
-                        addLog('emailRef.current.focus()');
-                    }}
-                    className="py-2 rounded-lg bg-amber-900/30 border border-amber-700/40 text-xs text-amber-300 hover:bg-amber-900/50 transition-colors"
-                >
-                    Focus Email
-                </button>
-                <button
-                    onClick={() => {
-                        if (nameRef.current) {
-                            nameRef.current.select();
-                            addLog('nameRef.current.select()');
-                        }
-                    }}
-                    className="py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-xs text-zinc-400 hover:text-zinc-200 transition-colors"
-                >
-                    Select Name
-                </button>
-                <button
-                    onClick={() => {
-                        if (nameRef.current) {
-                            nameRef.current.value = '';
-                            nameRef.current.focus();
-                            addLog('nameRef.current.value = ""');
-                        }
-                    }}
-                    className="py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-xs text-zinc-400 hover:text-zinc-200 transition-colors"
-                >
-                    Clear Name
-                </button>
-            </div>
+            <RefActionButtons
+                onFocusName={() => {
+                    nameRef.current?.focus();
+                    addLog('nameRef.current.focus()');
+                }}
+                onFocusEmail={() => {
+                    emailRef.current?.focus();
+                    addLog('emailRef.current.focus()');
+                }}
+                onSelectName={() => {
+                    if (nameRef.current) {
+                        nameRef.current.select();
+                        addLog('nameRef.current.select()');
+                    }
+                }}
+                onClearName={() => {
+                    if (nameRef.current) {
+                        nameRef.current.value = '';
+                        nameRef.current.focus();
+                        addLog('nameRef.current.value = ""');
+                    }
+                }}
+            />
 
-            {log.length > 0 && (
-                <div className="bg-zinc-800/60 border border-zinc-700/50 rounded-lg p-3">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-2">
-                        Actions called
-                    </p>
-                    <div className="space-y-0.5">
-                        {log.map((entry, i) => (
-                            <p
-                                key={i}
-                                className={`text-[11px] font-mono ${i === 0 ? 'text-amber-300' : 'text-zinc-600'}`}
-                            >
-                                {entry}
-                            </p>
-                        ))}
-                    </div>
-                </div>
-            )}
+            <ActionLog entries={log} />
         </div>
     );
 }

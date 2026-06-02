@@ -1,4 +1,6 @@
 import { useRef, useState } from 'react';
+import { TimerDisplay } from './components/TimerDisplay';
+import { TimerControls } from './components/TimerControls';
 
 export const fileUrl = '/src/slides/use-ref/demo/MutableValue.tsx';
 
@@ -42,46 +44,14 @@ export default function MutableValue() {
                 (state) does.
             </p>
 
-            <div className="bg-zinc-800/60 border border-zinc-700/50 rounded-xl p-6 text-center space-y-2">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
-                    Elapsed
-                </p>
-                <p className="text-6xl font-black font-mono tabular-nums text-zinc-100">
-                    {seconds}
-                    <span className="text-2xl text-zinc-500">s</span>
-                </p>
-                <div className="flex items-center justify-center gap-1.5">
-                    <span
-                        className={`w-1.5 h-1.5 rounded-full ${running ? 'bg-emerald-400 animate-pulse' : 'bg-zinc-600'}`}
-                    />
-                    <span className="text-[10px] text-zinc-500">
-                        {running ? 'running' : 'stopped'}
-                    </span>
-                </div>
-            </div>
+            <TimerDisplay seconds={seconds} running={running} />
 
-            <div className="grid grid-cols-3 gap-2">
-                <button
-                    onClick={start}
-                    disabled={running}
-                    className="py-2 rounded-lg bg-emerald-900/30 border border-emerald-700/40 text-xs text-emerald-300 hover:bg-emerald-900/50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                >
-                    Start
-                </button>
-                <button
-                    onClick={stop}
-                    disabled={!running}
-                    className="py-2 rounded-lg bg-amber-900/30 border border-amber-700/40 text-xs text-amber-300 hover:bg-amber-900/50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                >
-                    Stop
-                </button>
-                <button
-                    onClick={reset}
-                    className="py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-xs text-zinc-400 hover:text-zinc-200 transition-colors"
-                >
-                    Reset
-                </button>
-            </div>
+            <TimerControls
+                running={running}
+                onStart={start}
+                onStop={stop}
+                onReset={reset}
+            />
 
             <div className="bg-zinc-800/40 border border-zinc-700/30 rounded-lg p-3 font-mono text-[11px] space-y-1.5">
                 <p className="text-zinc-500">

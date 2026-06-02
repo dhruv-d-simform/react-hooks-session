@@ -1,5 +1,7 @@
 import { useId, useState } from 'react';
-import OpenInVSCode from '@/components/OpenInVSCode';
+import DemoShell from '@/components/demo/DemoShell';
+import InfoNote from '@/components/demo/InfoNote';
+import { IdToggle } from './components/IdToggle';
 
 export const fileUrl = '/src/slides/use-id/demo/index.tsx';
 
@@ -17,7 +19,6 @@ function PasswordField({ label }: { label: string }) {
                     id="{id}"
                 </span>
             </div>
-
             <div className="space-y-1.5">
                 <label
                     htmlFor={id}
@@ -37,7 +38,6 @@ function PasswordField({ label }: { label: string }) {
                     className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-200 outline-none focus:border-purple-500 transition-colors placeholder:text-zinc-600"
                 />
             </div>
-
             <p className="text-[10px] text-zinc-600">
                 <span className="font-mono text-zinc-500">
                     &lt;label htmlFor="{id}"&gt;
@@ -70,7 +70,6 @@ function BrokenPasswordField({
                     id="{hardcodedId}" ❌
                 </span>
             </div>
-
             <div className="space-y-1.5">
                 <label
                     htmlFor={hardcodedId}
@@ -98,62 +97,36 @@ export default function Demo() {
     const [showBroken, setShowBroken] = useState(false);
 
     return (
-        <div className="p-6">
-            <div className="flex items-center justify-between mb-3">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
-                    Live Demo
-                </p>
-                <OpenInVSCode fileUrl={fileUrl} />
-            </div>
+        <DemoShell fileUrl={fileUrl}>
+            <IdToggle showBroken={showBroken} onToggle={setShowBroken} />
 
-            <div className="rounded-xl bg-zinc-900 border border-zinc-800 p-5 space-y-4">
-                <div className="flex items-center gap-3 bg-zinc-800/40 border border-zinc-700/30 rounded-lg p-3">
-                    <button
-                        onClick={() => setShowBroken(false)}
-                        className={`flex-1 py-1.5 rounded-lg text-xs font-medium transition-colors border ${!showBroken ? 'bg-purple-600 border-purple-500 text-white' : 'bg-transparent border-zinc-700 text-zinc-400 hover:text-zinc-200'}`}
-                    >
-                        useId ✅
-                    </button>
-                    <button
-                        onClick={() => setShowBroken(true)}
-                        className={`flex-1 py-1.5 rounded-lg text-xs font-medium transition-colors border ${showBroken ? 'bg-rose-600/80 border-rose-500 text-white' : 'bg-transparent border-zinc-700 text-zinc-400 hover:text-zinc-200'}`}
-                    >
-                        Hard-coded ID ❌
-                    </button>
-                </div>
-
-                {showBroken ? (
-                    <>
-                        <BrokenPasswordField
-                            label="Login Form"
-                            hardcodedId="password"
-                        />
-                        <BrokenPasswordField
-                            label="Register Form"
-                            hardcodedId="password"
-                        />
-                        <div className="bg-rose-900/15 border border-rose-700/25 rounded-lg p-3">
-                            <p className="text-[11px] text-rose-400">
-                                ⚠️ Both fields share{' '}
-                                <span className="font-mono">id="password"</span>{' '}
-                                — clicking either label focuses only the first
-                                input. Accessibility broken.
-                            </p>
-                        </div>
-                    </>
-                ) : (
-                    <>
-                        <PasswordField label="Login Form" />
-                        <PasswordField label="Register Form" />
-                        <div className="bg-emerald-900/15 border border-emerald-700/25 rounded-lg p-3">
-                            <p className="text-[11px] text-emerald-400">
-                                ✅ Each instance has a unique ID — clicking
-                                either label focuses the correct input.
-                            </p>
-                        </div>
-                    </>
-                )}
-            </div>
-        </div>
+            {showBroken ? (
+                <>
+                    <BrokenPasswordField
+                        label="Login Form"
+                        hardcodedId="password"
+                    />
+                    <BrokenPasswordField
+                        label="Register Form"
+                        hardcodedId="password"
+                    />
+                    <InfoNote color="rose">
+                        ⚠️ Both fields share{' '}
+                        <span className="font-mono">id="password"</span> —
+                        clicking either label focuses only the first input.
+                        Accessibility broken.
+                    </InfoNote>
+                </>
+            ) : (
+                <>
+                    <PasswordField label="Login Form" />
+                    <PasswordField label="Register Form" />
+                    <InfoNote color="emerald">
+                        ✅ Each instance has a unique ID — clicking either label
+                        focuses the correct input.
+                    </InfoNote>
+                </>
+            )}
+        </DemoShell>
     );
 }

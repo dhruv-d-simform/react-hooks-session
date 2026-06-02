@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
+import InfoNote from '@/components/demo/InfoNote';
+import { SearchInput } from './components/SearchInput';
+import { SearchStats } from './components/SearchStats';
+import { ResultChips } from './components/ResultChips';
 
 export const fileUrl = '/src/slides/custom-hooks/demo/ComposedSearch.tsx';
 
-/** Primitive hook: returns `value` only after it stops changing for `delay` ms. */
 function useDebounce<T>(value: T, delay: number) {
     const [debounced, setDebounced] = useState(value);
     useEffect(() => {
@@ -13,25 +16,11 @@ function useDebounce<T>(value: T, delay: number) {
 }
 
 const CATALOG = [
-    'useState',
-    'useEffect',
-    'useReducer',
-    'useContext',
-    'useRef',
-    'useMemo',
-    'useCallback',
-    'useTransition',
-    'useDeferredValue',
-    'useId',
-    'useSyncExternalStore',
-    'useOptimistic',
-    'useActionState',
+    'useState', 'useEffect', 'useReducer', 'useContext', 'useRef',
+    'useMemo', 'useCallback', 'useTransition', 'useDeferredValue',
+    'useId', 'useSyncExternalStore', 'useOptimistic', 'useActionState',
 ];
 
-/**
- * Higher-level hook composed FROM useDebounce. Custom hooks calling custom
- * hooks is the composition built-ins alone can't express — this is the payoff.
- */
 function useDebouncedSearch(query: string, delay: number) {
     const debouncedQuery = useDebounce(query, delay);
     const [results, setResults] = useState<string[]>(CATALOG);
@@ -40,7 +29,6 @@ function useDebouncedSearch(query: string, delay: number) {
 
     useEffect(() => {
         setIsSearching(true);
-        // Simulate an async lookup so the debounce is observable.
         const id = setTimeout(() => {
             const q = debouncedQuery.trim().toLowerCase();
             setResults(
@@ -57,10 +45,7 @@ function useDebouncedSearch(query: string, delay: number) {
 
 export default function ComposedSearch() {
     const [query, setQuery] = useState('');
-    const { results, isSearching, searchCount } = useDebouncedSearch(
-        query,
-        400
-    );
+    const { results, isSearching, searchCount } = useDebouncedSearch(query, 400);
 
     return (
         <div className="space-y-4">
@@ -74,52 +59,19 @@ export default function ComposedSearch() {
                 <span className="text-yellow-400">useEffect</span>
             </div>
 
-            <div className="relative">
-                <input
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search hooks… (try 'use', 'ref', 'mo')"
-                    className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-200 outline-none focus:border-teal-500 transition-colors"
-                />
-                {isSearching && (
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 border-teal-500 border-t-transparent animate-spin" />
-                )}
-            </div>
+            <SearchInput
+                value={query}
+                isSearching={isSearching}
+                onChange={setQuery}
+            />
+            <SearchStats searchCount={searchCount} resultCount={results.length} />
+            <ResultChips results={results} query={query} />
 
-            <div className="flex items-center justify-between text-[10px] font-mono text-zinc-500">
-                <span>
-                    keystrokes don&rsquo;t fire searches — debounced searches
-                    run: <span className="text-teal-400">{searchCount}</span>
-                </span>
-                <span className="bg-zinc-800 px-2 py-0.5 rounded-full">
-                    {results.length} match{results.length === 1 ? '' : 'es'}
-                </span>
-            </div>
-
-            <div className="flex flex-wrap gap-1.5 min-h-[2rem]">
-                {results.length === 0 ? (
-                    <span className="text-xs text-zinc-600 italic">
-                        no hooks match &ldquo;{query}&rdquo;
-                    </span>
-                ) : (
-                    results.map((h) => (
-                        <span
-                            key={h}
-                            className="text-[11px] font-mono px-2 py-1 rounded-md border bg-teal-500/10 text-teal-200 border-teal-500/30"
-                        >
-                            {h}
-                        </span>
-                    ))
-                )}
-            </div>
-
-            <div className="bg-zinc-800/40 border border-zinc-700/30 rounded-lg p-2.5">
-                <p className="text-[10px] text-zinc-500 leading-relaxed">
-                    ⚡ Type fast: the search only runs 400ms after you stop. The
-                    debounce logic is reused, not re-written — and the consumer
-                    never sees a timer.
-                </p>
-            </div>
+            <InfoNote color="zinc">
+                ⚡ Type fast: the search only runs 400ms after you stop. The
+                debounce logic is reused, not re-written — and the consumer never
+                sees a timer.
+            </InfoNote>
         </div>
     );
 }

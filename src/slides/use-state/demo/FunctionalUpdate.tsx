@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { CounterCard } from './components/CounterCard';
 
 export const fileUrl = '/src/slides/use-state/demo/FunctionalUpdate.tsx';
 
@@ -29,54 +30,22 @@ export default function FunctionalUpdate() {
             </p>
 
             <div className="grid grid-cols-2 gap-3">
-                <div className="bg-zinc-800/60 border border-rose-700/30 rounded-xl p-4 space-y-3">
-                    <div>
-                        <p className="text-[10px] font-bold uppercase tracking-wider text-rose-400 mb-0.5">
-                            Direct Update
-                        </p>
-                        <code className="text-[10px] text-zinc-500 font-mono">
-                            setCount(count + 1)
-                        </code>
-                    </div>
-                    <div className="text-4xl font-black font-mono text-center tabular-nums text-rose-300">
-                        {directCount}
-                    </div>
-                    <button
-                        onClick={handleDirect}
-                        className="w-full py-2 rounded-lg bg-rose-900/30 border border-rose-700/40 text-xs text-rose-300 hover:bg-rose-900/50 transition-colors"
-                    >
-                        Triple +1
-                    </button>
-                    <p className="text-[10px] text-zinc-600 leading-relaxed">
-                        All 3 calls read the same{' '}
-                        <span className="font-mono">count</span> snapshot — only
-                        adds 1 ❌
-                    </p>
-                </div>
-
-                <div className="bg-zinc-800/60 border border-emerald-700/30 rounded-xl p-4 space-y-3">
-                    <div>
-                        <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 mb-0.5">
-                            Functional Update
-                        </p>
-                        <code className="text-[10px] text-zinc-500 font-mono">
-                            setCount(c =&gt; c + 1)
-                        </code>
-                    </div>
-                    <div className="text-4xl font-black font-mono text-center tabular-nums text-emerald-300">
-                        {safeCount}
-                    </div>
-                    <button
-                        onClick={handleSafe}
-                        className="w-full py-2 rounded-lg bg-emerald-900/30 border border-emerald-700/40 text-xs text-emerald-300 hover:bg-emerald-900/50 transition-colors"
-                    >
-                        Triple +1
-                    </button>
-                    <p className="text-[10px] text-zinc-600 leading-relaxed">
-                        Each callback gets the latest queued{' '}
-                        <span className="font-mono">c</span> — adds 3 ✅
-                    </p>
-                </div>
+                <CounterCard
+                    title="Direct Update"
+                    code="setCount(count + 1)"
+                    count={directCount}
+                    onTriple={handleDirect}
+                    variant="direct"
+                    note="All 3 calls read the same count snapshot — only adds 1 ❌"
+                />
+                <CounterCard
+                    title="Functional Update"
+                    code="setCount(c => c + 1)"
+                    count={safeCount}
+                    onTriple={handleSafe}
+                    variant="functional"
+                    note="Each callback gets the latest queued c — adds 3 ✅"
+                />
             </div>
 
             <div className="bg-indigo-900/20 border border-indigo-700/30 rounded-lg p-3">

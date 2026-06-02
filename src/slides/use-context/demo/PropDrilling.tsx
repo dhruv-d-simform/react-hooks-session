@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { DrillBadge } from './components/DrillBadge';
 
 export const fileUrl = '/src/slides/use-context/demo/PropDrilling.tsx';
 
@@ -114,14 +115,6 @@ function MiniHeader({
                 {theme === 'dark' ? '☀️ Light' : '🌙 Dark'}
             </button>
         </div>
-    );
-}
-
-function DrillBadge({ prop }: { prop: string }) {
-    return (
-        <span className="text-[9px] font-mono bg-rose-900/30 text-rose-400 border border-rose-700/30 px-1.5 py-0.5 rounded">
-            prop: {prop}
-        </span>
     );
 }
 
