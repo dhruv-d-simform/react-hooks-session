@@ -17,7 +17,9 @@ export function CartDisplay({
                 <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
                     Cart{' '}
                     {items.length > 0 && (
-                        <span className="text-indigo-400">({items.length})</span>
+                        <span className="text-indigo-400">
+                            ({items.length})
+                        </span>
                     )}
                 </p>
                 {items.length > 0 && (

@@ -1,5 +1,6 @@
 import { useReducer } from 'react';
 import DemoShell from '@/components/demo/DemoShell';
+import InfoNote from '@/components/demo/InfoNote';
 import { reducer } from './reducer';
 import { PRODUCTS } from './utils/data';
 import { ProductGrid } from './components/ProductGrid';
@@ -14,16 +15,14 @@ export default function Demo() {
 
     return (
         <DemoShell fileUrl={fileUrl}>
-            <div className="bg-zinc-800/60 border border-zinc-700/50 rounded-lg p-3">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-1.5">
+            <InfoNote color="zinc">
+                <span className="font-bold uppercase tracking-widest text-[10px] block mb-1">
                     Dispatch an action
-                </p>
-                <p className="text-xs text-zinc-500">
-                    Click the buttons below —{' '}
-                    <span className="font-mono text-emerald-400">dispatch</span>{' '}
-                    tells the reducer what happened, not what to do.
-                </p>
-            </div>
+                </span>
+                Click the buttons below —{' '}
+                <span className="font-mono text-emerald-400">dispatch</span>{' '}
+                tells the reducer what happened, not what to do.
+            </InfoNote>
 
             <ProductGrid
                 products={PRODUCTS}

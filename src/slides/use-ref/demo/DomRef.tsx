@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { RefActionButtons } from './components/RefActionButtons';
 import { ActionLog } from './components/ActionLog';
+import { RefInput } from './components/RefInput';
 
 export const fileUrl = '/src/slides/use-ref/demo/DomRef.tsx';
 
@@ -21,26 +22,16 @@ export default function DomRef() {
             </p>
 
             <div className="space-y-2.5">
-                <div>
-                    <label className="text-[10px] uppercase tracking-wider text-zinc-500 mb-1 block">
-                        Name
-                    </label>
-                    <input
-                        ref={nameRef}
-                        placeholder="Click 'Focus Name' below"
-                        className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-200 outline-none focus:border-amber-500 transition-colors placeholder:text-zinc-600"
-                    />
-                </div>
-                <div>
-                    <label className="text-[10px] uppercase tracking-wider text-zinc-500 mb-1 block">
-                        Email
-                    </label>
-                    <input
-                        ref={emailRef}
-                        placeholder="Click 'Focus Email' below"
-                        className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-200 outline-none focus:border-amber-500 transition-colors placeholder:text-zinc-600"
-                    />
-                </div>
+                <RefInput
+                    label="Name"
+                    placeholder="Click 'Focus Name' below"
+                    ref={nameRef}
+                />
+                <RefInput
+                    label="Email"
+                    placeholder="Click 'Focus Email' below"
+                    ref={emailRef}
+                />
             </div>
 
             <RefActionButtons

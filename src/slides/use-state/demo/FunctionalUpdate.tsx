@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import InfoNote from '@/components/demo/InfoNote';
 import { CounterCard } from './components/CounterCard';
 
 export const fileUrl = '/src/slides/use-state/demo/FunctionalUpdate.tsx';
@@ -48,16 +49,14 @@ export default function FunctionalUpdate() {
                 />
             </div>
 
-            <div className="bg-indigo-900/20 border border-indigo-700/30 rounded-lg p-3">
-                <p className="text-xs text-zinc-400 leading-relaxed">
-                    💡{' '}
-                    <span className="text-indigo-300 font-medium">
-                        Rule of thumb
-                    </span>{' '}
-                    — If the new state depends on the previous value, always use
-                    the functional form.
-                </p>
-            </div>
+            <InfoNote color="indigo">
+                💡{' '}
+                <span className="text-indigo-300 font-medium">
+                    Rule of thumb
+                </span>{' '}
+                — If the new state depends on the previous value, always use the
+                functional form.
+            </InfoNote>
         </div>
     );
 }

@@ -32,7 +32,7 @@ export default function Info() {
                 <div className="aspect-video">
                     <iframe
                         className="w-full h-full"
-                        src="https://www.youtube.com/embed/dpw9EHDh2bM"
+                        src="https://www.youtube.com/embed/dpw9EHDh2bM?start=688"
                         title="React Today and Tomorrow — Dan Abramov, React Conf 2018"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowFullScreen

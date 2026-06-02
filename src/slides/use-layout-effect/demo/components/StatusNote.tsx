@@ -1,8 +1,4 @@
-export function StatusNote({
-    useLayout,
-}: {
-    useLayout: boolean;
-}) {
+export function StatusNote({ useLayout }: { useLayout: boolean }) {
     return (
         <div
             className={`rounded-lg p-3 text-[11px] leading-relaxed border ${

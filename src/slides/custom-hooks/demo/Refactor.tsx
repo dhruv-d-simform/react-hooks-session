@@ -91,7 +91,9 @@ export default function Refactor() {
                 ) : (
                     <>
                         Same behavior, one line. The logic lives in{' '}
-                        <span className="font-mono text-teal-300">useFetch</span>{' '}
+                        <span className="font-mono text-teal-300">
+                            useFetch
+                        </span>{' '}
                         — test it once, reuse it everywhere.
                     </>
                 )}

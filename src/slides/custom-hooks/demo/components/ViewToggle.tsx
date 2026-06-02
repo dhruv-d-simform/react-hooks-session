@@ -19,7 +19,9 @@ export function ViewToggle({
                             : 'text-zinc-400 hover:text-zinc-200'
                     }`}
                 >
-                    {v === 'before' ? 'Before · inline logic' : 'After · useFetch'}
+                    {v === 'before'
+                        ? 'Before · inline logic'
+                        : 'After · useFetch'}
                 </button>
             ))}
         </div>

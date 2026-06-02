@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import InfoNote from '@/components/demo/InfoNote';
 import { NameField } from './components/NameField';
 import { AccentPicker } from './components/AccentPicker';
+import { LocalStorageCallDisplay } from './components/LocalStorageCallDisplay';
 
 export const fileUrl = '/src/slides/custom-hooks/demo/UseLocalStorage.tsx';
 
@@ -32,18 +33,7 @@ export default function UseLocalStorage() {
 
     return (
         <div className="space-y-4">
-            <div className="bg-zinc-800/40 border border-zinc-700/30 rounded-lg p-2.5 font-mono text-[11px]">
-                <span className="text-purple-400">const</span>{' '}
-                <span className="text-zinc-200">[</span>
-                <span className="text-indigo-300">name</span>
-                <span className="text-zinc-200">, </span>
-                <span className="text-emerald-400">setName</span>
-                <span className="text-zinc-200">] = </span>
-                <span className="text-yellow-400">useLocalStorage</span>
-                <span className="text-zinc-200">(</span>
-                <span className="text-orange-300">'demo:name'</span>
-                <span className="text-zinc-200">, …)</span>
-            </div>
+            <LocalStorageCallDisplay storageKey="demo:name" />
 
             <div className="space-y-2.5">
                 <NameField value={name} onChange={setName} />

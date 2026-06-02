@@ -1,8 +1,4 @@
-export function FormatterExample({
-    time,
-}: {
-    time: string;
-}) {
+export function FormatterExample({ time }: { time: string }) {
     return (
         <div className="bg-zinc-800/40 border border-zinc-700/30 rounded-lg p-3 font-mono text-[11px]">
             <p className="text-zinc-500 mb-1.5">Formatter overload example:</p>

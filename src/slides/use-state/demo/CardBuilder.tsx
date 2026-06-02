@@ -24,7 +24,9 @@ export default function CardBuilder() {
                 </p>
                 <span className="text-[10px] font-mono text-zinc-600 bg-zinc-800 px-2 py-0.5 rounded-full">
                     renders:{' '}
-                    <span className="text-indigo-400">{renderCount.current}</span>
+                    <span className="text-indigo-400">
+                        {renderCount.current}
+                    </span>
                 </span>
             </div>
 

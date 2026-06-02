@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import InfoNote from '@/components/demo/InfoNote';
 import { UserIdPicker } from './components/UserIdPicker';
 import { LoadingSpinner } from './components/LoadingSpinner';
 import { ErrorDisplay } from './components/ErrorDisplay';
@@ -43,28 +44,26 @@ export default function DataFetching() {
         <div className="space-y-4">
             <UserIdPicker active={userId} onSelect={setUserId} />
 
-            <div className="bg-zinc-800/40 border border-zinc-700/30 rounded-lg p-2.5 font-mono text-[11px]">
-                <span className="text-zinc-500">useEffect deps: </span>
-                <span className="text-indigo-300">[userId]</span>
+            <InfoNote color="zinc">
+                useEffect deps:{' '}
+                <span className="font-mono text-indigo-300">[userId]</span>
                 <span className="text-zinc-600">
                     {' '}
                     — re-fetches whenever userId changes
                 </span>
-            </div>
+            </InfoNote>
 
             {loading && <LoadingSpinner userId={userId} />}
             {error && <ErrorDisplay message={error} />}
             {!loading && !error && user && <UserCard user={user} />}
 
-            <div className="bg-zinc-800/40 border border-zinc-700/30 rounded-lg p-2.5">
-                <p className="text-[10px] text-zinc-500">
-                    🧹 <span className="text-zinc-400">Cleanup:</span> switching
-                    user IDs rapidly cancels in-flight requests via{' '}
-                    <span className="font-mono text-zinc-300">
-                        controller.abort()
-                    </span>
-                </p>
-            </div>
+            <InfoNote color="zinc">
+                🧹 <span className="text-zinc-400">Cleanup:</span> switching
+                user IDs rapidly cancels in-flight requests via{' '}
+                <span className="font-mono text-zinc-300">
+                    controller.abort()
+                </span>
+            </InfoNote>
         </div>
     );
 }

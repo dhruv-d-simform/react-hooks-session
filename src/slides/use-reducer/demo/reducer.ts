@@ -1,4 +1,9 @@
-export type Product = { id: number; name: string; emoji: string; price: number };
+export type Product = {
+    id: number;
+    name: string;
+    emoji: string;
+    price: number;
+};
 export type CartItem = Product & { qty: number };
 export type State = { items: CartItem[] };
 export type Action =
