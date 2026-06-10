@@ -19,6 +19,9 @@ export default function HooksCounter() {
         return () => clearInterval(id);
     }, []);
 
+    const increment = () => setCount((c) => c + 1);
+    const decrement = () => setCount((c) => c - 1);
+
     return (
         <div className="space-y-4">
             <p className="text-xs text-zinc-500">
@@ -26,7 +29,7 @@ export default function HooksCounter() {
             </p>
             <div className="flex items-center gap-4">
                 <button
-                    onClick={() => setCount((c) => c - 1)}
+                    onClick={decrement}
                     className="w-10 h-10 rounded-lg bg-zinc-700 hover:bg-zinc-600 text-xl font-bold transition-colors"
                 >
                     −
@@ -35,7 +38,7 @@ export default function HooksCounter() {
                     {count}
                 </span>
                 <button
-                    onClick={() => setCount((c) => c + 1)}
+                    onClick={increment}
                     className="w-10 h-10 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xl font-bold transition-colors"
                 >
                     +

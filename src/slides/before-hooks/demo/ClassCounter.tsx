@@ -10,6 +10,10 @@ export default class ClassCounter extends Component<object, CounterState> {
     private intervalId?: ReturnType<typeof setInterval>;
     state: CounterState = { count: 0, timer: 0 };
 
+    constructor(props: object) {
+        super(props);
+    }
+
     componentDidMount() {
         document.title = `Count: ${this.state.count}`; // 1️⃣ title sync
         this.intervalId = setInterval(() => {
@@ -29,8 +33,13 @@ export default class ClassCounter extends Component<object, CounterState> {
         clearInterval(this.intervalId); // 2️⃣ timer CLEANUP — far from START ⚠️
     }
 
-    increment = () => this.setState((p) => ({ count: p.count + 1 }));
-    decrement = () => this.setState((p) => ({ count: p.count - 1 }));
+    increment() {
+        this.setState((p) => ({ count: p.count + 1 }));
+    }
+
+    decrement() {
+        this.setState((p) => ({ count: p.count - 1 }));
+    }
 
     render() {
         const { count, timer } = this.state;
