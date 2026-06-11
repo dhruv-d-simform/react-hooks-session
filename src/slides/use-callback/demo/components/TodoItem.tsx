@@ -2,11 +2,13 @@ import { useRef } from 'react';
 
 export function TodoItem({
     text,
+    idx,
     onRemove,
     instanceId,
 }: {
     text: string;
-    onRemove: () => void;
+    idx: number;
+    onRemove: (idx: number) => void;
     instanceId: string;
 }) {
     const renderCount = useRef(0);
@@ -31,7 +33,7 @@ export function TodoItem({
                     ×{renderCount.current}
                 </span>
                 <button
-                    onClick={onRemove}
+                    onClick={() => onRemove(idx)}
                     className="text-zinc-600 hover:text-rose-400 text-xs transition-colors"
                 >
                     ✕

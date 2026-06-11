@@ -1,30 +1,24 @@
-import { useState, useCallback, memo } from 'react';
+import { useState, memo } from 'react';
 import StatusBanner from '@/components/demo/StatusBanner';
 import { TodoItem } from './components/TodoItem';
 import { CounterBar } from './components/CounterBar';
 
+export const fileUrl = '/src/slides/use-callback/demo/TodoListWithout.tsx';
+
 const MemoizedTodoItem = memo(TodoItem);
 
-export default function TodoList({
-    useCallbackEnabled,
-}: {
-    useCallbackEnabled: boolean;
-}) {
+export default function TodoListWithout() {
     const [count, setCount] = useState(0);
     const [todos, setTodos] = useState(['Buy groceries', 'Walk the dog']);
 
-    const stableRemove = useCallback(
-        (idx: number) => setTodos((t) => t.filter((_, i) => i !== idx)),
-        []
-    );
-    const unstableRemove = (idx: number) =>
+    const remove = (idx: number) =>
         setTodos((t) => t.filter((_, i) => i !== idx));
 
     return (
         <div className="space-y-3">
             <StatusBanner
-                enabled={useCallbackEnabled}
-                onMessage="✅ useCallback([]) — stable function reference, child skips re-render"
+                enabled={false}
+                onMessage=""
                 offMessage="❌ Inline function — new reference every render, child re-renders too"
             />
             <CounterBar
@@ -42,19 +36,15 @@ export default function TodoList({
                     <MemoizedTodoItem
                         key={todo}
                         text={todo}
+                        idx={idx}
                         instanceId={`item-${idx}`}
-                        onRemove={
-                            useCallbackEnabled
-                                ? () => stableRemove(idx)
-                                : () => unstableRemove(idx)
-                        }
+                        onRemove={remove}
                     />
                 ))}
             </div>
             <p className="text-[11px] text-zinc-600">
-                {useCallbackEnabled
-                    ? 'Increment the counter — children stay at ×1 because the callback reference is stable.'
-                    : 'Increment the counter — children re-render every time because a new function is created.'}
+                Increment the counter — children re-render every time because a
+                new function is created.
             </p>
         </div>
     );
