@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/refs */
 import { useState, useMemo, useRef } from 'react';
 import StatusBanner from '@/components/demo/StatusBanner';
 import { FilterInputs } from './components/FilterInputs';
@@ -5,28 +6,24 @@ import { ResultsStats } from './components/ResultsStats';
 import { ResultsList } from './components/ResultsList';
 import { ITEMS, expensiveFilter } from './utils/data';
 
-export default function FilterDemo({ memoized }: { memoized: boolean }) {
+export const fileUrl = '/src/slides/use-memo/demo/FilterDemoWith.tsx';
+
+export default function FilterDemoWith() {
     const [query, setQuery] = useState('');
     const [name, setName] = useState('');
     const computeCount = useRef(0);
 
-    const filtered = memoized
-        ? // eslint-disable-next-line react-hooks/rules-of-hooks
-          useMemo(() => {
-              computeCount.current++;
-              return expensiveFilter(ITEMS, query);
-          }, [query])
-        : (() => {
-              computeCount.current++;
-              return expensiveFilter(ITEMS, query);
-          })();
+    const filtered = useMemo(() => {
+        computeCount.current++;
+        return expensiveFilter(ITEMS, query);
+    }, [query]);
 
     return (
         <div className="space-y-3">
             <StatusBanner
-                enabled={memoized}
+                enabled={true}
                 onMessage="✅ useMemo([query]) — compute only when query changes"
-                offMessage="❌ No memo — recomputes on every render, including unrelated state changes"
+                offMessage=""
             />
             <FilterInputs
                 query={query}
@@ -38,7 +35,7 @@ export default function FilterDemo({ memoized }: { memoized: boolean }) {
                 count={filtered.length}
                 total={ITEMS.length}
                 computations={computeCount.current}
-                memoized={memoized}
+                memoized={true}
             />
             <ResultsList items={filtered} />
         </div>
