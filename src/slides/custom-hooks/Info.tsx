@@ -4,17 +4,44 @@ const keyPoints = [
     {
         emoji: '🧩',
         title: "It's just a function",
-        desc: 'A custom hook is nothing more than a function whose name starts with `use` and that calls other hooks. No new API, no special import — you already know how to write one.',
+        desc: 'A function whose name starts with `use` and that calls other hooks. No new API, no registration, nothing to import from React — you already know how to write one.',
+    },
+    {
+        emoji: '🪆',
+        title: 'Hooks compose, like components',
+        desc: 'Components solved composition for UI: build small ones, assemble big ones. Custom hooks do the exact same thing for logic — useCountdown can be built on useInterval, which is built on useEffect.',
     },
     {
         emoji: '🔒',
         title: 'Shares logic, not state',
-        desc: 'Each call to a custom hook gets its own isolated state. Two components calling useToggle() are completely independent — you reuse the behavior, never the data.',
+        desc: 'Every call to a custom hook gets its own isolated state. Two components calling the same hook are completely independent — you reuse the behavior, never the data.',
+    },
+];
+
+const layers = [
+    {
+        label: '<FocusTimer />',
+        note: 'component — composes hooks',
+        color: 'text-sky-300',
+        pad: 'pl-0',
     },
     {
-        emoji: '📐',
-        title: 'Rules of Hooks still apply',
-        desc: 'Call them at the top level, only from React functions or other hooks. The `use` prefix is the signal that lets the linter enforce those rules for you.',
+        label: 'useCountdown()',
+        note: 'custom hook — composes a custom hook',
+        color: 'text-teal-300',
+        pad: 'pl-5',
+    },
+    {
+        label: 'useInterval()',
+        note: 'custom hook — composes built-ins',
+        color: 'text-teal-300',
+        pad: 'pl-10',
+    },
+    {
+        label: 'useState · useEffect',
+        note: 'built-in hooks',
+        color: 'text-purple-300',
+        pad: 'pl-[60px]',
     },
 ];
 
@@ -25,60 +52,33 @@ export default function Info() {
                 badge="The Payoff"
                 badgeVariant="teal"
                 title="Custom Hooks"
-                subtitle="The promise from 2018, delivered. Bundle stateful logic into a reusable function and share it across components."
+                subtitle="Everything so far leads here. Hooks aren't just APIs — they're building blocks. And building blocks are for composing."
             />
 
-            <div className="rounded-xl bg-zinc-900/60 border border-zinc-800 p-4 font-mono">
+            <div className="rounded-xl bg-zinc-900/60 border border-zinc-800 p-4">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-3">
-                    Anatomy
+                    Composition, all the way down
                 </p>
-                <div className="text-sm space-y-1">
-                    <p>
-                        <span className="text-purple-400">function</span>{' '}
-                        <span className="text-yellow-400">useToggle</span>
-                        <span className="text-zinc-200">(</span>
-                        <span className="text-orange-300">initial</span>
-                        <span className="text-zinc-200">) {'{'}</span>
-                    </p>
-                    <p className="pl-4">
-                        <span className="text-purple-400">const</span>{' '}
-                        <span className="text-zinc-200">[</span>
-                        <span className="text-indigo-300">on</span>
-                        <span className="text-zinc-200">, </span>
-                        <span className="text-emerald-400">setOn</span>
-                        <span className="text-zinc-200">] = </span>
-                        <span className="text-yellow-400">useState</span>
-                        <span className="text-zinc-200">(</span>
-                        <span className="text-orange-300">initial</span>
-                        <span className="text-zinc-200">)</span>
-                    </p>
-                    <p className="pl-4">
-                        <span className="text-purple-400">const</span>{' '}
-                        <span className="text-emerald-400">toggle</span>
-                        <span className="text-zinc-200"> = () =&gt; </span>
-                        <span className="text-emerald-400">setOn</span>
-                        <span className="text-zinc-200">(</span>
-                        <span className="text-indigo-300">v</span>
-                        <span className="text-zinc-200"> =&gt; !</span>
-                        <span className="text-indigo-300">v</span>
-                        <span className="text-zinc-200">)</span>
-                    </p>
-                    <p className="pl-4">
-                        <span className="text-purple-400">return</span>{' '}
-                        <span className="text-zinc-200">[</span>
-                        <span className="text-indigo-300">on</span>
-                        <span className="text-zinc-200">, </span>
-                        <span className="text-emerald-400">toggle</span>
-                        <span className="text-zinc-200">]</span>
-                    </p>
-                    <p>
-                        <span className="text-zinc-200">{'}'}</span>
-                    </p>
+                <div className="font-mono text-sm space-y-1.5">
+                    {layers.map((l) => (
+                        <div
+                            key={l.label}
+                            className={`flex items-baseline gap-2.5 ${l.pad}`}
+                        >
+                            <span className="text-zinc-600">↳</span>
+                            <span className={`${l.color} font-semibold`}>
+                                {l.label}
+                            </span>
+                            <span className="text-[10px] text-zinc-600 font-sans">
+                                {l.note}
+                            </span>
+                        </div>
+                    ))}
                 </div>
-                <p className="mt-3 text-[11px] text-zinc-500">
-                    Built entirely out of built-in hooks — the only thing that
-                    makes it &ldquo;custom&rdquo; is the{' '}
-                    <span className="font-mono text-teal-300">use</span> prefix.
+                <p className="mt-3 text-[11px] text-zinc-500 leading-relaxed">
+                    The same idea that made components powerful — small pieces
+                    assembled into bigger ones — now applies to{' '}
+                    <span className="text-zinc-300">stateful logic</span>.
                 </p>
             </div>
 
@@ -115,34 +115,25 @@ export default function Info() {
                 </p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
                     Remember the &ldquo;Before Hooks&rdquo; pains — wrapper
-                    hell, HOCs, render props? Custom hooks are Dan&rsquo;s
-                    answer: reuse stateful logic{' '}
+                    hell, HOCs, render props? This is the answer. Reuse stateful
+                    logic{' '}
                     <span className="text-teal-300 font-semibold">
                         without sharing state
                     </span>{' '}
-                    and without touching your component tree. Extract a hook to
-                    reuse <em>behavior</em>, not just to shorten a component.
+                    and without touching the component tree. Components compose
+                    the UI; hooks compose the logic behind it.
                 </p>
             </div>
 
             <div className="rounded-xl bg-zinc-900/60 border border-zinc-800 p-3.5">
                 <p className="text-xs text-zinc-400 leading-relaxed">
-                    👉 On the right:{' '}
-                    <span className="font-semibold text-zinc-200">
-                        Refactor
-                    </span>{' '}
-                    shows the <em>why</em> (extracting{' '}
-                    <span className="font-mono text-teal-300">useFetch</span>),
-                    then{' '}
-                    <span className="font-semibold text-zinc-200">
-                        useLocalStorage
-                    </span>{' '}
+                    👉 On the right: a working Focus Timer. The UI is fine — the
+                    component behind it is a tangle of{' '}
+                    <span className="font-mono text-purple-300">useState</span>{' '}
                     and{' '}
-                    <span className="font-semibold text-zinc-200">
-                        Composed
-                    </span>{' '}
-                    show custom hooks composing other custom hooks — the real
-                    power.
+                    <span className="font-mono text-purple-300">useEffect</span>
+                    . We&rsquo;ll refactor it into custom hooks,{' '}
+                    <span className="text-zinc-200 font-semibold">live</span>.
                 </p>
             </div>
         </div>
