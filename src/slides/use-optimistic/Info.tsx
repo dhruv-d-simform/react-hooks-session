@@ -7,6 +7,7 @@ export default function Info() {
                 badge="React 19 · New"
                 badgeVariant="purple"
                 title="useOptimistic"
+                docsUrl="https://react.dev/reference/react/useOptimistic"
                 subtitle="Update the UI instantly while a server request is in flight — roll back automatically on failure."
             />
 

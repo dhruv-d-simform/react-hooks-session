@@ -34,6 +34,7 @@ export default function Info() {
                 badge="Effect · Escape Hatch"
                 badgeVariant="indigo"
                 title="useEffect"
+                docsUrl="https://react.dev/reference/react/useEffect"
                 subtitle="Synchronise your component with something outside React — APIs, timers, subscriptions."
             />
 

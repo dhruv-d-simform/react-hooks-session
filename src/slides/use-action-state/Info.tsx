@@ -7,6 +7,7 @@ export default function Info() {
                 badge="React 19 · New"
                 badgeVariant="purple"
                 title="useActionState"
+                docsUrl="https://react.dev/reference/react/useActionState"
                 subtitle="Manage form state — pending, success, and error — with a single hook."
             />
 

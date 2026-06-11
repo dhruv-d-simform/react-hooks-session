@@ -7,6 +7,7 @@ export default function Info() {
                 badge="Performance"
                 badgeVariant="emerald"
                 title="useDeferredValue"
+                docsUrl="https://react.dev/reference/react/useDeferredValue"
                 subtitle="Keep a stale copy of a value so expensive renders can lag behind urgent ones."
             />
 

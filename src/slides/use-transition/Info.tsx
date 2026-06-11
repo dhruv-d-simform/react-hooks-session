@@ -7,6 +7,7 @@ export default function Info() {
                 badge="Performance"
                 badgeVariant="emerald"
                 title="useTransition"
+                docsUrl="https://react.dev/reference/react/useTransition"
                 subtitle='Mark a state update as "non-urgent" so React keeps the UI responsive while it processes it.'
             />
 

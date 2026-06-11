@@ -7,6 +7,7 @@ export default function Info() {
                 badge="Performance"
                 badgeVariant="emerald"
                 title="useMemo"
+                docsUrl="https://react.dev/reference/react/useMemo"
                 subtitle="Cache an expensive computation between renders — only recompute when its inputs change."
             />
 

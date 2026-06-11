@@ -38,6 +38,7 @@ export default function Info() {
                 badge="State"
                 badgeVariant="indigo"
                 title="useReducer"
+                docsUrl="https://react.dev/reference/react/useReducer"
                 subtitle="Manage complex state with explicit actions instead of scattered setters."
             />
 

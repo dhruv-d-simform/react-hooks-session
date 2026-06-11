@@ -7,6 +7,7 @@ export default function Info() {
                 badge="React 19 · New"
                 badgeVariant="purple"
                 title="use"
+                docsUrl="https://react.dev/reference/react/use"
                 subtitle="Read the value of a Promise directly inside render."
             />
 

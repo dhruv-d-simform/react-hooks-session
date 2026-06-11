@@ -25,6 +25,7 @@ export default function Info() {
                 badge="Ref · Escape Hatch"
                 badgeVariant="amber"
                 title="useRef"
+                docsUrl="https://react.dev/reference/react/useRef"
                 subtitle='A mutable box that lives outside the re-render cycle. Two jobs: DOM access and "instance variables".'
             />
 

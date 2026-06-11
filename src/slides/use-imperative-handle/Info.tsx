@@ -7,6 +7,7 @@ export default function Info() {
                 badge="Ref · Escape Hatch"
                 badgeVariant="amber"
                 title="useImperativeHandle"
+                docsUrl="https://react.dev/reference/react/useImperativeHandle"
                 subtitle="Expose a custom set of methods from a child component to its parent — nothing more."
             />
 

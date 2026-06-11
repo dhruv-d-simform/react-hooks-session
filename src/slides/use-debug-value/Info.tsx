@@ -7,6 +7,7 @@ export default function Info() {
                 badge="Library Authors"
                 badgeVariant="purple"
                 title="useDebugValue"
+                docsUrl="https://react.dev/reference/react/useDebugValue"
                 subtitle="Add a label to your custom hook so it's readable in React DevTools."
             />
 

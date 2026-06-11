@@ -7,6 +7,7 @@ export default function Info() {
                 badge="Effect"
                 badgeVariant="indigo"
                 title="useEffectEvent"
+                docsUrl="https://react.dev/reference/react/useEffectEvent"
                 subtitle="Read the latest props/state inside an effect without making them dependencies."
             />
 

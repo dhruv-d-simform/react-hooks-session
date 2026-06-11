@@ -7,6 +7,7 @@ export default function Info() {
                 badge="Library Authors"
                 badgeVariant="purple"
                 title="useId"
+                docsUrl="https://react.dev/reference/react/useId"
                 subtitle="Generate a unique, stable ID that works across server and client rendering."
             />
 

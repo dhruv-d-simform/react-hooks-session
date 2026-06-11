@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/refs */
 import { useState, useRef } from 'react';
 import StatusBanner from '@/components/demo/StatusBanner';
 import { FilterInputs } from './components/FilterInputs';

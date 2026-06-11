@@ -7,6 +7,7 @@ export default function Info() {
                 badge="Performance"
                 badgeVariant="emerald"
                 title="useCallback"
+                docsUrl="https://react.dev/reference/react/useCallback"
                 subtitle="Cache a function reference between renders so memoized children don't re-render unnecessarily."
             />
 

@@ -7,6 +7,7 @@ export default function Info() {
                 badge="Effect · Library Authors"
                 badgeVariant="purple"
                 title="useInsertionEffect"
+                docsUrl="https://react.dev/reference/react/useInsertionEffect"
                 subtitle="Inject CSS rules into the DOM before any layout effects run. For CSS-in-JS libraries only."
             />
 

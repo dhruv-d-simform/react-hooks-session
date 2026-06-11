@@ -7,6 +7,7 @@ export default function Info() {
                 badge="Library Authors"
                 badgeVariant="purple"
                 title="useSyncExternalStore"
+                docsUrl="https://react.dev/reference/react/useSyncExternalStore"
                 subtitle="Subscribe to external state that lives outside React — browser APIs, Redux, Zustand."
             />
 

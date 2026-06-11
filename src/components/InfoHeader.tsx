@@ -5,6 +5,7 @@ interface Props {
     badgeVariant?: BadgeVariant;
     title: string;
     subtitle?: string;
+    docsUrl?: string;
 }
 
 const badgeStyles: Record<BadgeVariant, string> = {
@@ -20,6 +21,7 @@ export default function InfoHeader({
     badgeVariant = 'indigo',
     title,
     subtitle,
+    docsUrl,
 }: Props) {
     return (
         <div className="mb-5">
@@ -30,7 +32,20 @@ export default function InfoHeader({
                     {badge}
                 </span>
             )}
-            <h1 className="text-3xl font-black tracking-tight mb-1">{title}</h1>
+            <h1 className="text-3xl font-black tracking-tight mb-1">
+                {docsUrl ? (
+                    <a
+                        href={docsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="transition-colors hover:text-indigo-300 hover:underline underline-offset-4"
+                    >
+                        {title}
+                    </a>
+                ) : (
+                    title
+                )}
+            </h1>
             {subtitle && (
                 <p className="text-zinc-400 text-sm leading-relaxed">
                     {subtitle}

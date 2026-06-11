@@ -25,6 +25,7 @@ export default function Info() {
                 badge="State"
                 badgeVariant="indigo"
                 title="useState"
+                docsUrl="https://react.dev/reference/react/useState"
                 subtitle="Add memory to your components. The most fundamental hook in React."
             />
 

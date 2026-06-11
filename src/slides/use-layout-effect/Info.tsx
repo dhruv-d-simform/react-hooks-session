@@ -7,6 +7,7 @@ export default function Info() {
                 badge="Effect · Escape Hatch"
                 badgeVariant="indigo"
                 title="useLayoutEffect"
+                docsUrl="https://react.dev/reference/react/useLayoutEffect"
                 subtitle="Like useEffect, but fires synchronously before the browser paints."
             />
 

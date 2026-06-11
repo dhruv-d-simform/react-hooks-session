@@ -28,6 +28,7 @@ export default function Info() {
                 badge="Context"
                 badgeVariant="indigo"
                 title="useContext"
+                docsUrl="https://react.dev/reference/react/useContext"
                 subtitle="Share values anywhere in the tree — no prop drilling required."
             />
 
