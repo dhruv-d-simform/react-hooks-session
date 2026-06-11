@@ -1,21 +1,23 @@
-type ContentTab = 'posts' | 'photos' | 'videos';
+import type { ProfileTab } from './TabContent';
 
-const CONTENT_TABS: Record<ContentTab, string> = {
-    posts: 'Posts',
-    photos: 'Photos',
-    videos: 'Videos',
+const TABS: Record<ProfileTab, string> = {
+    about: 'About ⚡',
+    posts: 'Posts 🐢',
+    photos: 'Photos 🐢',
 };
 
-export function ContentTabBar({
+export function ProfileTabBar({
     active,
+    pendingTab,
     onSelect,
 }: {
-    active: ContentTab;
-    onSelect: (tab: ContentTab) => void;
+    active: ProfileTab;
+    pendingTab?: ProfileTab | null;
+    onSelect: (tab: ProfileTab) => void;
 }) {
     return (
         <div className="flex items-center gap-1 bg-zinc-800 p-1 rounded-lg">
-            {(Object.entries(CONTENT_TABS) as [ContentTab, string][]).map(
+            {(Object.entries(TABS) as [ProfileTab, string][]).map(
                 ([tab, label]) => (
                     <button
                         key={tab}
@@ -27,6 +29,11 @@ export function ContentTabBar({
                         }`}
                     >
                         {label}
+                        {pendingTab === tab && (
+                            <span className="ml-1.5 inline-block animate-spin">
+                                ◌
+                            </span>
+                        )}
                     </button>
                 )
             )}

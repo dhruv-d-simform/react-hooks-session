@@ -25,7 +25,11 @@ export default function Demo() {
             activeTab={activeTab}
             onTabChange={(v) => setActiveTab(v as Tab)}
         >
-            {activeTab === 'without' ? <FilterDemoWithout key="without" /> : <FilterDemoWith key="with" />}
+            {activeTab === 'without' ? (
+                <FilterDemoWithout key="without" />
+            ) : (
+                <FilterDemoWith key="with" />
+            )}
         </TabDemoShell>
     );
 }

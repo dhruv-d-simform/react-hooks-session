@@ -1,38 +1,35 @@
-import { useState, useDeferredValue } from 'react';
-import DemoShell from '@/components/demo/DemoShell';
-import InfoNote from '@/components/demo/InfoNote';
-import { SlowList } from './components/SlowList';
-import { DeferredSearchInput } from './components/DeferredSearchInput';
-import { SyncStatusDot } from './components/SyncStatusDot';
+import { useState } from 'react';
+import TabDemoShell from '@/components/demo/TabDemoShell';
+import SearchDemoWithout, { fileUrl as withoutUrl } from './SearchDemoWithout';
+import SearchDemoWith, { fileUrl as withUrl } from './SearchDemoWith';
 
-export const fileUrl = '/src/slides/use-deferred-value/demo/index.tsx';
+type Tab = 'without' | 'with';
+
+const TAB_LABELS: Record<Tab, string> = {
+    without: 'Without useDeferredValue ❌',
+    with: 'With useDeferredValue ✅',
+};
+
+const FILE_URLS: Record<Tab, string> = {
+    without: withoutUrl,
+    with: withUrl,
+};
 
 export default function Demo() {
-    const [query, setQuery] = useState('');
-    const deferredQuery = useDeferredValue(query);
-    const isStale = query !== deferredQuery;
+    const [activeTab, setActiveTab] = useState<Tab>('without');
 
     return (
-        <DemoShell fileUrl={fileUrl}>
-            <DeferredSearchInput
-                query={query}
-                deferredQuery={deferredQuery}
-                onChange={setQuery}
-            />
-
-            <SyncStatusDot isStale={isStale} />
-
-            <div
-                className={`transition-opacity duration-150 ${isStale ? 'opacity-50' : 'opacity-100'}`}
-            >
-                <SlowList query={deferredQuery} />
-            </div>
-
-            <InfoNote color="emerald">
-                ✅ The input stays immediately responsive — the list renders in
-                the background with the deferred value. Stale results show at
-                50% opacity.
-            </InfoNote>
-        </DemoShell>
+        <TabDemoShell
+            tabs={TAB_LABELS}
+            fileUrls={FILE_URLS}
+            activeTab={activeTab}
+            onTabChange={(v) => setActiveTab(v as Tab)}
+        >
+            {activeTab === 'without' ? (
+                <SearchDemoWithout key="without" />
+            ) : (
+                <SearchDemoWith key="with" />
+            )}
+        </TabDemoShell>
     );
 }

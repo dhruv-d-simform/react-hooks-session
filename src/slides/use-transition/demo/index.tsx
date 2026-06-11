@@ -1,31 +1,35 @@
 import { useState } from 'react';
-import TabBar from '@/components/TabBar';
-import DemoShell from '@/components/demo/DemoShell';
-import TransitionDemo from './TransitionDemo';
+import TabDemoShell from '@/components/demo/TabDemoShell';
+import TabsDemoWithout, { fileUrl as withoutUrl } from './TabsDemoWithout';
+import TabsDemoWith, { fileUrl as withUrl } from './TabsDemoWith';
 
-export const fileUrl = '/src/slides/use-transition/demo/index.tsx';
+type Tab = 'without' | 'with';
 
-type DemoTab = 'with' | 'without';
+const TAB_LABELS: Record<Tab, string> = {
+    without: 'Without useTransition ❌',
+    with: 'With useTransition ✅',
+};
 
-const DEMO_LABELS: Record<DemoTab, string> = {
-    without: 'No transition ❌',
-    with: 'useTransition ✅',
+const FILE_URLS: Record<Tab, string> = {
+    without: withoutUrl,
+    with: withUrl,
 };
 
 export default function Demo() {
-    const [activeDemo, setActiveDemo] = useState<DemoTab>('without');
+    const [activeTab, setActiveTab] = useState<Tab>('without');
 
     return (
-        <DemoShell fileUrl={fileUrl}>
-            <TabBar
-                tabs={DEMO_LABELS}
-                active={activeDemo}
-                onSelect={(v) => setActiveDemo(v as DemoTab)}
-            />
-            <TransitionDemo
-                key={activeDemo}
-                useTransitionEnabled={activeDemo === 'with'}
-            />
-        </DemoShell>
+        <TabDemoShell
+            tabs={TAB_LABELS}
+            fileUrls={FILE_URLS}
+            activeTab={activeTab}
+            onTabChange={(v) => setActiveTab(v as Tab)}
+        >
+            {activeTab === 'without' ? (
+                <TabsDemoWithout key="without" />
+            ) : (
+                <TabsDemoWith key="with" />
+            )}
+        </TabDemoShell>
     );
 }
