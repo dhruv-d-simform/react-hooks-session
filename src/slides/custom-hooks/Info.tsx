@@ -9,7 +9,7 @@ const keyPoints = [
     {
         emoji: '🪆',
         title: 'Hooks compose, like components',
-        desc: 'Components solved composition for UI: build small ones, assemble big ones. Custom hooks do the exact same thing for logic — useCountdown can be built on useInterval, which is built on useEffect.',
+        desc: 'Components solved composition for UI: build small ones, assemble big ones. Custom hooks do the exact same thing for logic — useUser can be built on useFetch, which is built on useState + useEffect.',
     },
     {
         emoji: '🔒',
@@ -20,19 +20,19 @@ const keyPoints = [
 
 const layers = [
     {
-        label: '<FocusTimer />',
+        label: '<UserExplorer />',
         note: 'component — composes hooks',
         color: 'text-sky-300',
         pad: 'pl-0',
     },
     {
-        label: 'useCountdown()',
+        label: 'useUser()',
         note: 'custom hook — composes a custom hook',
         color: 'text-teal-300',
         pad: 'pl-5',
     },
     {
-        label: 'useInterval()',
+        label: 'useFetch()',
         note: 'custom hook — composes built-ins',
         color: 'text-teal-300',
         pad: 'pl-10',
@@ -127,8 +127,9 @@ export default function Info() {
 
             <div className="rounded-xl bg-zinc-900/60 border border-zinc-800 p-3.5">
                 <p className="text-xs text-zinc-400 leading-relaxed">
-                    👉 On the right: a working Focus Timer. The UI is fine — the
-                    component behind it is a tangle of{' '}
+                    👉 On the right: a working user explorer — profile + posts.
+                    The UI is fine — the component behind it fetches both with
+                    the same copy-pasted tangle of{' '}
                     <span className="font-mono text-purple-300">useState</span>{' '}
                     and{' '}
                     <span className="font-mono text-purple-300">useEffect</span>

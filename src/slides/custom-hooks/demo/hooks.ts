@@ -1,112 +1,82 @@
 // Live-refactor cheat sheet — NOT imported anywhere.
-// Copy these into FocusTimer.tsx during the session.
-// See the bottom for what FocusTimer collapses into.
+// Copy these into UserExplorer.tsx during the session.
+// See the bottom for what UserExplorer collapses into.
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
+import type { Post, User } from './types';
 
-// ── Layer 1: built directly on useEffect ─────────────────────────────
+const API = 'https://jsonplaceholder.typicode.com';
 
-export function useInterval(callback: () => void, delay: number | null) {
-    const callbackRef = useRef(callback);
+// ── Layer 1: built directly on useState + useEffect ──────────────────
 
-    useEffect(() => {
-        callbackRef.current = callback;
-    });
-
-    useEffect(() => {
-        if (delay === null) return;
-        const id = setInterval(() => callbackRef.current(), delay);
-        return () => clearInterval(id);
-    }, [delay]);
-}
-
-export function useDocumentTitle(
-    title: string | null,
-    fallback = 'react-hooks'
-) {
-    useEffect(() => {
-        document.title = title ?? fallback;
-        return () => {
-            document.title = fallback;
-        };
-    }, [title, fallback]);
-}
-
-// ── Layer 2: a hook composed out of another custom hook ──────────────
-
-export function useCountdown(duration: number, onComplete?: () => void) {
-    const [remaining, setRemaining] = useState(duration);
-    const [running, setRunning] = useState(false);
-    const onCompleteRef = useRef(onComplete);
+export function useFetch<T>(url: string) {
+    // The result remembers which url it belongs to. If it doesn't match
+    // the current url, we're loading — no manual setLoading bookkeeping.
+    const [res, setRes] = useState<{
+        url: string;
+        data: T | null;
+        error: string | null;
+    } | null>(null);
 
     useEffect(() => {
-        onCompleteRef.current = onComplete;
-    });
+        const controller = new AbortController();
 
-    useInterval(
-        () => {
-            const next = remaining - 1;
-            setRemaining(next);
-            if (next === 0) {
-                setRunning(false);
-                onCompleteRef.current?.();
-            }
-        },
-        running && remaining > 0 ? 1000 : null
-    );
+        fetch(url, { signal: controller.signal })
+            .then((r) => {
+                if (!r.ok) throw new Error(`HTTP ${r.status}`);
+                return r.json() as Promise<T>;
+            })
+            .then((data) => setRes({ url, data, error: null }))
+            .catch((err: Error) => {
+                if (err.name !== 'AbortError') {
+                    setRes({ url, data: null, error: err.message });
+                }
+            });
 
-    const toggle = () => {
-        if (remaining > 0) setRunning((r) => !r);
+        return () => controller.abort();
+    }, [url]);
+
+    const stale = res === null || res.url !== url;
+    return {
+        data: stale ? null : res.data,
+        error: stale ? null : res.error,
+        loading: stale,
     };
-
-    const reset = () => {
-        setRunning(false);
-        setRemaining(duration);
-    };
-
-    return { remaining, running, toggle, reset };
 }
 
-// ── What FocusTimer collapses into ───────────────────────────────────
+// ── Layer 2: hooks composed out of useFetch ──────────────────────────
+
+export function useUser(id: number) {
+    return useFetch<User>(`${API}/users/${id}`);
+}
+
+export function usePosts(userId: number) {
+    return useFetch<Post[]>(`${API}/posts?userId=${userId}`);
+}
+
+// ── What UserExplorer collapses into ─────────────────────────────────
 //
-// export default function FocusTimer() {
-//     const [sessionsDone, setSessionsDone] = useState(0);
+// export default function UserExplorer() {
+//     const [userId, setUserId] = useState(1);
 //
-//     const timer = useCountdown(DURATION, () => {
-//         setSessionsDone((n) => n + 1);
-//     });
-//
-//     useDocumentTitle(
-//         timer.running ? `⏳ ${formatTime(timer.remaining)} · Focus` : null
-//     );
+//     const user = useUser(userId);
+//     const posts = usePosts(userId);
 //
 //     return (
-//         <div className="space-y-5">
-//             <div className="flex items-center justify-end">
-//                 <span className="text-[11px] text-zinc-500">
-//                     Sessions done:{' '}
-//                     <span className="font-mono text-teal-300 font-semibold">
-//                         {sessionsDone}
-//                     </span>
-//                 </span>
-//             </div>
+//         <div className="space-y-4">
+//             <UserPicker active={userId} onSelect={setUserId} />
 //
-//             <TimerDisplay
-//                 time={formatTime(timer.remaining)}
-//                 progress={DURATION > 0 ? 1 - timer.remaining / DURATION : 0}
-//                 running={timer.running}
+//             <ProfilePanel
+//                 user={user.data}
+//                 loading={user.loading}
+//                 error={user.error}
 //             />
 //
-//             <TimerControls
-//                 running={timer.running}
-//                 canStart={timer.remaining > 0}
-//                 onToggle={timer.toggle}
-//                 onReset={timer.reset}
+//             <PostsPanel
+//                 posts={posts.data}
+//                 loading={posts.loading}
+//                 error={posts.error}
 //             />
-//
-//             <p className="text-center text-[11px] text-zinc-600">
-//                 👀 watch the browser tab title while it runs
-//             </p>
 //         </div>
 //     );
 // }
