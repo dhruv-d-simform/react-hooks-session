@@ -8,7 +8,7 @@ import BrokenPasswordField from './BrokenPasswordField';
 export const fileUrl = '/src/slides/use-id/demo/index.tsx';
 
 export default function Demo() {
-    const [showBroken, setShowBroken] = useState(false);
+    const [showBroken, setShowBroken] = useState(true);
 
     return (
         <DemoShell fileUrl={fileUrl}>

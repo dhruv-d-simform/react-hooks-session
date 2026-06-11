@@ -21,12 +21,13 @@ const ITEMS: Record<ContentTab, string[]> = {
     ],
 };
 
-export function SlowTabContent({ tab }: { tab: ContentTab }) {
-    const start = performance.now();
-    while (performance.now() - start < 80) {}
+ITEMS.posts = Array(1000).fill(ITEMS.posts).flat();
+ITEMS.photos = Array(1000).fill(ITEMS.photos).flat();
+ITEMS.videos = Array(1000).fill(ITEMS.videos).flat();
 
+export function SlowTabContent({ tab }: { tab: ContentTab }) {
     return (
-        <div className="space-y-2">
+        <div className="space-y-2 max-h-72 overflow-y-auto slide-scroll">
             {ITEMS[tab].map((item) => (
                 <div
                     key={item}

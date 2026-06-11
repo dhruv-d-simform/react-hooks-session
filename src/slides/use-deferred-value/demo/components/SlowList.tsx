@@ -3,7 +3,7 @@ import { ITEMS } from '../utils/data';
 
 export const SlowList = memo(function SlowList({ query }: { query: string }) {
     const start = performance.now();
-    while (performance.now() - start < 60) {}
+    while (performance.now() - start < 60);
 
     const filtered = ITEMS.filter(
         (item) =>

@@ -6,17 +6,17 @@ import PropDrilling, { fileUrl as drillingUrl } from './PropDrilling';
 type Tab = 'context' | 'drilling';
 
 const TAB_LABELS: Record<Tab, string> = {
-    context: 'useContext',
     drilling: 'Prop Drilling',
+    context: 'useContext',
 };
 
 const FILE_URLS: Record<Tab, string> = {
-    context: contextUrl,
     drilling: drillingUrl,
+    context: contextUrl,
 };
 
 export default function Demo() {
-    const [activeTab, setActiveTab] = useState<Tab>('context');
+    const [activeTab, setActiveTab] = useState<Tab>('drilling');
 
     return (
         <TabDemoShell

@@ -8,12 +8,12 @@ export const fileUrl = '/src/slides/use-transition/demo/index.tsx';
 type DemoTab = 'with' | 'without';
 
 const DEMO_LABELS: Record<DemoTab, string> = {
-    with: 'useTransition ✅',
     without: 'No transition ❌',
+    with: 'useTransition ✅',
 };
 
 export default function Demo() {
-    const [activeDemo, setActiveDemo] = useState<DemoTab>('with');
+    const [activeDemo, setActiveDemo] = useState<DemoTab>('without');
 
     return (
         <DemoShell fileUrl={fileUrl}>

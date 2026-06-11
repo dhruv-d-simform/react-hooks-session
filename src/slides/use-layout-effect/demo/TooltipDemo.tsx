@@ -14,7 +14,6 @@ export default function TooltipDemo({ useLayout }: { useLayout: boolean }) {
     const tipRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const [style, setStyle] = useState<React.CSSProperties>({
-        opacity: 0,
         top: 0,
         left: 0,
     });
@@ -32,7 +31,7 @@ export default function TooltipDemo({ useLayout }: { useLayout: boolean }) {
             relTop = btn.top - container.top + btn.height + 8;
         }
 
-        setStyle({ opacity: 1, top: relTop, left: relLeft });
+        setStyle({ top: relTop, left: relLeft });
     }, []);
 
     useLayoutEffect(() => {
@@ -56,7 +55,7 @@ export default function TooltipDemo({ useLayout }: { useLayout: boolean }) {
             <button
                 ref={btnRef}
                 onClick={() => {
-                    setStyle({ opacity: 0, top: 0, left: 0 });
+                    setStyle({ top: 0, left: 0 });
                     setOpen((v) => !v);
                 }}
                 className="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs text-white font-medium transition-colors"
