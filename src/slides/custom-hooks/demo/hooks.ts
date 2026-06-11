@@ -1,6 +1,6 @@
 // Live-refactor cheat sheet — NOT imported anywhere.
-// Copy these into FocusTimer.tsx (or paste this whole file and import from it)
-// during the session. See the bottom for what FocusTimer collapses into.
+// Copy these into FocusTimer.tsx during the session.
+// See the bottom for what FocusTimer collapses into.
 
 import { useState, useEffect, useRef } from 'react';
 
@@ -20,20 +20,6 @@ export function useInterval(callback: () => void, delay: number | null) {
     }, [delay]);
 }
 
-export function useTimeout(callback: () => void, delay: number | null) {
-    const callbackRef = useRef(callback);
-
-    useEffect(() => {
-        callbackRef.current = callback;
-    });
-
-    useEffect(() => {
-        if (delay === null) return;
-        const id = setTimeout(() => callbackRef.current(), delay);
-        return () => clearTimeout(id);
-    }, [delay]);
-}
-
 export function useDocumentTitle(
     title: string | null,
     fallback = 'react-hooks'
@@ -46,37 +32,10 @@ export function useDocumentTitle(
     }, [title, fallback]);
 }
 
-// Keys are KeyboardEvent.code values: 'Space', 'KeyR', ...
-export function useKeyboardShortcuts(handlers: Record<string, () => void>) {
-    const handlersRef = useRef(handlers);
+// ── Layer 2: a hook composed out of another custom hook ──────────────
 
-    useEffect(() => {
-        handlersRef.current = handlers;
-    });
-
-    useEffect(() => {
-        const onKeyDown = (e: KeyboardEvent) => {
-            const target = e.target as HTMLElement;
-            if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
-                return;
-            }
-            const handler = handlersRef.current[e.code];
-            if (handler) {
-                e.preventDefault();
-                handler();
-            }
-        };
-
-        window.addEventListener('keydown', onKeyDown);
-        return () => window.removeEventListener('keydown', onKeyDown);
-    }, []);
-}
-
-// ── Layer 2: hooks composed out of other custom hooks ────────────────
-
-export function useCountdown(initialDuration: number, onComplete?: () => void) {
-    const [duration, setDuration] = useState(initialDuration);
-    const [remaining, setRemaining] = useState(initialDuration);
+export function useCountdown(duration: number, onComplete?: () => void) {
+    const [remaining, setRemaining] = useState(duration);
     const [running, setRunning] = useState(false);
     const onCompleteRef = useRef(onComplete);
 
@@ -105,26 +64,7 @@ export function useCountdown(initialDuration: number, onComplete?: () => void) {
         setRemaining(duration);
     };
 
-    const restart = (newDuration: number) => {
-        setDuration(newDuration);
-        setRemaining(newDuration);
-        setRunning(false);
-    };
-
-    return { duration, remaining, running, toggle, reset, restart };
-}
-
-// A boolean flag that hides itself after `durationMs` — built on useTimeout
-export function useTimedFlag(durationMs: number) {
-    const [visible, setVisible] = useState(false);
-
-    useTimeout(() => setVisible(false), visible ? durationMs : null);
-
-    return {
-        visible,
-        show: () => setVisible(true),
-        hide: () => setVisible(false),
-    };
+    return { remaining, running, toggle, reset };
 }
 
 // ── What FocusTimer collapses into ───────────────────────────────────
@@ -132,34 +72,17 @@ export function useTimedFlag(durationMs: number) {
 // export default function FocusTimer() {
 //     const [sessionsDone, setSessionsDone] = useState(0);
 //
-//     const done = useTimedFlag(4000);
-//
-//     const timer = useCountdown(PRESETS[0].seconds, () => {
+//     const timer = useCountdown(DURATION, () => {
 //         setSessionsDone((n) => n + 1);
-//         done.show();
 //     });
 //
 //     useDocumentTitle(
 //         timer.running ? `⏳ ${formatTime(timer.remaining)} · Focus` : null
 //     );
 //
-//     useKeyboardShortcuts({
-//         Space: timer.toggle,
-//         KeyR: () => {
-//             timer.reset();
-//             done.hide();
-//         },
-//     });
-//
-//     const selectPreset = (seconds: number) => {
-//         timer.restart(seconds);
-//         done.hide();
-//     };
-//
 //     return (
 //         <div className="space-y-5">
-//             <div className="flex items-center justify-between">
-//                 <PresetPicker active={timer.duration} onSelect={selectPreset} />
+//             <div className="flex items-center justify-end">
 //                 <span className="text-[11px] text-zinc-500">
 //                     Sessions done:{' '}
 //                     <span className="font-mono text-teal-300 font-semibold">
@@ -170,27 +93,20 @@ export function useTimedFlag(durationMs: number) {
 //
 //             <TimerDisplay
 //                 time={formatTime(timer.remaining)}
-//                 progress={
-//                     timer.duration > 0
-//                         ? 1 - timer.remaining / timer.duration
-//                         : 0
-//                 }
+//                 progress={DURATION > 0 ? 1 - timer.remaining / DURATION : 0}
 //                 running={timer.running}
 //             />
-//
-//             {done.visible && <DoneBanner />}
 //
 //             <TimerControls
 //                 running={timer.running}
 //                 canStart={timer.remaining > 0}
 //                 onToggle={timer.toggle}
-//                 onReset={() => {
-//                     timer.reset();
-//                     done.hide();
-//                 }}
+//                 onReset={timer.reset}
 //             />
 //
-//             <ShortcutHints />
+//             <p className="text-center text-[11px] text-zinc-600">
+//                 👀 watch the browser tab title while it runs
+//             </p>
 //         </div>
 //     );
 // }
