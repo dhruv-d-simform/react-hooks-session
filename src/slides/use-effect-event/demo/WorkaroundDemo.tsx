@@ -1,7 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import InfoNote from '@/components/demo/InfoNote';
 import { Controls } from './components/Controls';
 import { ConnectionLog } from './components/ConnectionLog';
+import { connectToRoom } from './components/chatServer';
+
+export const fileUrl = '/src/slides/use-effect-event/demo/WorkaroundDemo.tsx';
 
 type Room = 'general' | 'random' | 'react';
 type Theme = 'dark' | 'light';
@@ -12,17 +15,20 @@ export default function WorkaroundDemo() {
     const [log, setLog] = useState<string[]>([]);
 
     const latestTheme = useRef(theme);
-    latestTheme.current = theme; // always up to date, not a dep
+    useLayoutEffect(() => {
+        latestTheme.current = theme;
+    });
 
     const addLog = (msg: string) =>
         setLog((prev) => [msg, ...prev].slice(0, 6));
 
     useEffect(() => {
-        const t = latestTheme.current; // read latest value without dep
-        addLog(`[${t}] Connected to #${room}`);
-        return () => {
-            addLog(`[${latestTheme.current}] Disconnected from #${room}`);
-        };
+        return connectToRoom(room, {
+            onConnect: () =>
+                addLog(`[${latestTheme.current}] Connected to #${room}`),
+            onDisconnect: () =>
+                addLog(`[${latestTheme.current}] Disconnected from #${room}`),
+        });
     }, [room]); // only room → theme changes don't reconnect ✅
 
     return (

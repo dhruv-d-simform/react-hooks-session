@@ -10,51 +10,36 @@ export default function Info() {
                 subtitle="Read the latest props/state inside an effect without making them dependencies."
             />
 
-            <div className="rounded-xl bg-amber-900/15 border border-amber-700/30 p-3.5">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-amber-400/70 mb-1">
-                    Status
-                </p>
-                <p className="text-xs text-zinc-400 leading-relaxed">
-                    <span className="font-mono text-amber-300">
-                        useEffectEvent
-                    </span>{' '}
-                    is not yet in stable React. It's available experimentally
-                    and expected in a future release. The demo below shows the
-                    problem it solves and the ref-based workaround used today.
-                </p>
-            </div>
-
             <div className="rounded-xl bg-zinc-900 border border-zinc-800 p-4 space-y-3">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
                     The problem
                 </p>
                 <p className="text-xs text-zinc-400 leading-relaxed">
-                    An effect that connects to a chat room needs{' '}
-                    <span className="font-mono text-zinc-300">roomId</span> in
-                    its deps. But if it also reads{' '}
+                    An effect connects to a chat room and passes{' '}
                     <span className="font-mono text-zinc-300">theme</span> to
-                    log a message, adding{' '}
-                    <span className="font-mono text-zinc-300">theme</span> to
-                    deps causes the room to reconnect every time the theme
-                    changes — which is wrong.
+                    the connection callbacks. That forces{' '}
+                    <span className="font-mono text-zinc-300">theme</span> into
+                    the deps array — so every theme change triggers a reconnect,
+                    even though the room didn't change.
                 </p>
                 <div className="font-mono text-[11px] bg-zinc-800/60 rounded-lg p-3 space-y-0.5">
                     <p className="text-zinc-500">
                         <span className="text-yellow-400">useEffect</span>
                         {'(() => {'}
                     </p>
-                    <p className="pl-4 text-zinc-300">
-                        connect(roomId){' '}
-                        <span className="text-zinc-600">// want this dep</span>
+                    <p className="pl-4 text-zinc-400">
+                        {'connectToRoom(room, {'}
                     </p>
-                    <p className="pl-4 text-zinc-500">
-                        log(theme){' '}
-                        <span className="text-rose-400">
-                            // don't want theme as dep!
-                        </span>
+                    <p className="pl-8 text-zinc-400">
+                        {'onConnect: () => log('}
+                        <span className="text-rose-400">theme</span>
+                        {'),'}
                     </p>
+                    <p className="pl-4 text-zinc-400">{'})'}</p>
                     <p className="text-zinc-500">
-                        {'}, [roomId, theme])'}{' '}
+                        {'}, [room, '}
+                        <span className="text-rose-400">theme</span>
+                        {'])'}{' '}
                         <span className="text-rose-400">
                             ← reconnects on theme change
                         </span>
@@ -64,33 +49,36 @@ export default function Info() {
 
             <div className="rounded-xl bg-zinc-900 border border-zinc-800 p-4 space-y-3">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
-                    The solution (future API)
+                    The solution
+                </p>
+                <p className="text-xs text-zinc-400 leading-relaxed">
+                    Wrap the callbacks in{' '}
+                    <span className="font-mono text-zinc-300">
+                        useEffectEvent
+                    </span>
+                    . They always read the latest{' '}
+                    <span className="font-mono text-zinc-300">theme</span> but
+                    are never treated as dependencies.
                 </p>
                 <div className="font-mono text-[11px] bg-zinc-800/60 rounded-lg p-3 space-y-0.5">
                     <p>
                         <span className="text-purple-400">const</span>{' '}
-                        <span className="text-emerald-400">onLog</span>{' '}
+                        <span className="text-emerald-400">onConnect</span>{' '}
                         <span className="text-zinc-500">=</span>{' '}
                         <span className="text-yellow-400">useEffectEvent</span>
-                        {'(() => {'}
+                        {'(() => log(theme))'}
                     </p>
-                    <p className="pl-4 text-zinc-300">
-                        log(theme){' '}
-                        <span className="text-zinc-600">
-                            // always reads latest theme
-                        </span>
-                    </p>
-                    <p className="text-zinc-500">{'})'}</p>
                     <p className="mt-2 text-zinc-500">
                         <span className="text-yellow-400">useEffect</span>
                         {'(() => {'}
                     </p>
-                    <p className="pl-4 text-zinc-300">connect(roomId)</p>
-                    <p className="pl-4 text-zinc-300">
-                        <span className="text-emerald-400">onLog</span>()
+                    <p className="pl-4 text-zinc-400">
+                        {'connectToRoom(room, { '}
+                        <span className="text-emerald-400">onConnect</span>
+                        {' })'}
                     </p>
                     <p className="text-zinc-500">
-                        {'}, [roomId])'}{' '}
+                        {'}, [room])'}{' '}
                         <span className="text-emerald-400">
                             ← theme not a dep ✅
                         </span>
@@ -100,14 +88,16 @@ export default function Info() {
 
             <div className="rounded-xl bg-indigo-900/15 border border-indigo-700/30 p-4">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-indigo-400/70 mb-1.5">
-                    Today's workaround
+                    Pre-React 19 workaround
                 </p>
                 <p className="text-xs text-zinc-400 leading-relaxed">
-                    Use a ref to hold the latest value. Read{' '}
+                    Sync the latest value into a ref via{' '}
                     <span className="font-mono text-zinc-300">
-                        latestTheme.current
-                    </span>{' '}
-                    inside the effect — refs are always fresh without being
+                        useLayoutEffect
+                    </span>
+                    , then read{' '}
+                    <span className="font-mono text-zinc-300">ref.current</span>{' '}
+                    inside the callbacks — refs are always fresh without being
                     deps.
                 </p>
             </div>

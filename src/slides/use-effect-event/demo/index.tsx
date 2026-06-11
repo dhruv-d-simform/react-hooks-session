@@ -1,29 +1,38 @@
 import { useState } from 'react';
-import TabBar from '@/components/TabBar';
-import DemoShell from '@/components/demo/DemoShell';
-import ProblemDemo from './ProblemDemo';
-import WorkaroundDemo from './WorkaroundDemo';
+import TabDemoShell from '@/components/demo/TabDemoShell';
+import ProblemDemo, { fileUrl as problemUrl } from './ProblemDemo';
+import WorkaroundDemo, { fileUrl as workaroundUrl } from './WorkaroundDemo';
+import UseEffectEventDemo, {
+    fileUrl as effectEventUrl,
+} from './UseEffectEventDemo';
 
-export const fileUrl = '/src/slides/use-effect-event/demo/index.tsx';
-
-type Tab = 'problem' | 'workaround';
+type Tab = 'problem' | 'workaround' | 'useEffectEvent';
 
 const TAB_LABELS: Record<Tab, string> = {
     problem: 'Problem',
     workaround: 'Ref Workaround',
+    useEffectEvent: 'useEffectEvent',
+};
+
+const FILE_URLS: Record<Tab, string> = {
+    problem: problemUrl,
+    workaround: workaroundUrl,
+    useEffectEvent: effectEventUrl,
 };
 
 export default function Demo() {
     const [activeTab, setActiveTab] = useState<Tab>('problem');
 
     return (
-        <DemoShell fileUrl={fileUrl}>
-            <TabBar
-                tabs={TAB_LABELS}
-                active={activeTab}
-                onSelect={(v) => setActiveTab(v as Tab)}
-            />
-            {activeTab === 'problem' ? <ProblemDemo /> : <WorkaroundDemo />}
-        </DemoShell>
+        <TabDemoShell
+            tabs={TAB_LABELS}
+            fileUrls={FILE_URLS}
+            activeTab={activeTab}
+            onTabChange={(v) => setActiveTab(v as Tab)}
+        >
+            {activeTab === 'problem' && <ProblemDemo />}
+            {activeTab === 'workaround' && <WorkaroundDemo />}
+            {activeTab === 'useEffectEvent' && <UseEffectEventDemo />}
+        </TabDemoShell>
     );
 }
