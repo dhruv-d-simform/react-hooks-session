@@ -1,14 +1,7 @@
-import {
-    useState,
-    useEffect,
-    useLayoutEffect,
-    useRef,
-    useCallback,
-} from 'react';
+import { useState, useLayoutEffect, useRef, useCallback } from 'react';
 import { TooltipOverlay } from './components/TooltipOverlay';
-import { TooltipNote } from './components/TooltipNote';
 
-export default function TooltipDemo({ useLayout }: { useLayout: boolean }) {
+export default function TooltipDemoLayout() {
     const [open, setOpen] = useState(false);
     const btnRef = useRef<HTMLButtonElement>(null);
     const tipRef = useRef<HTMLDivElement>(null);
@@ -27,22 +20,15 @@ export default function TooltipDemo({ useLayout }: { useLayout: boolean }) {
         const relLeft =
             btn.left - container.left + btn.width / 2 - tip.width / 2;
         let relTop = btn.top - container.top - tip.height - 8;
-        if (relTop < 0) {
-            relTop = btn.top - container.top + btn.height + 8;
-        }
+        if (relTop < 0) relTop = btn.top - container.top + btn.height + 8;
 
         setStyle({ top: relTop, left: relLeft });
     }, []);
 
     useLayoutEffect(() => {
-        if (!useLayout || !open) return;
+        if (!open) return;
         reposition();
-    }, [open, useLayout, reposition]);
-
-    useEffect(() => {
-        if (useLayout || !open) return;
-        reposition();
-    }, [open, useLayout, reposition]);
+    }, [open, reposition]);
 
     return (
         <div
@@ -51,7 +37,12 @@ export default function TooltipDemo({ useLayout }: { useLayout: boolean }) {
             style={{ minHeight: 140 }}
         >
             {open && <TooltipOverlay style={style} tipRef={tipRef} />}
-            <TooltipNote useLayout={useLayout} />
+            <p className="text-xs text-zinc-500 text-center">
+                <span className="font-mono text-amber-300">
+                    useLayoutEffect
+                </span>{' '}
+                positions tooltip before paint — no flicker
+            </p>
             <button
                 ref={btnRef}
                 onClick={() => {

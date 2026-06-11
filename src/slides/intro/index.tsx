@@ -35,8 +35,9 @@ export default function Intro() {
                 Patterns, Pitfalls &amp; Power
             </p>
             <p className="text-sm text-zinc-500 mb-12">
-                Deep dive into React's hook system — <span className="font-bold text-zinc-400">use </span>them right, avoid the
-                traps, unlock their full potential
+                Deep dive into React's hook system —{' '}
+                <span className="font-bold text-zinc-400">use </span>them right,
+                avoid the traps, unlock their full potential
             </p>
 
             <div className="grid grid-cols-3 gap-4 text-left max-w-3xl w-full">
